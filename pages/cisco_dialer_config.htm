@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+		<title id="pageTitle"></title>
+		<link href="/styles/cisco_dialer_config.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div id="container">
+			<div id="header">
+				<img src="/images/extension_icon_48.png" alt="Extension Logo">
+				<h2 id="headerTitle"></h2>
+			</div>
+			<p>
+				<h4 id="phoneAddressLabel"></h4>
+				<input type="text" size="60" class="input-text" name="phoneAdress" id="phoneAdress">
+				<div class="description" id="phoneAddressDescription"></div>
+			</p>
+			<h4 id="authConfigLabel"></h4>
+			<div id="authContainer">
+				<p></p>
+				<div class="left">					
+					<h4 id="authUserLabel"></h4>
+					<input type="text" size="30" class="input-text" name="authUser" id="authUser">
+				</div>
+				<div>
+					<h4 id="authPassLabel"></h4>
+					<input type="password" size="30" class="input-text" name="authSecret" id="authSecret">
+				</div>
+				<div class="description" id="authConfigDescription"></div>
+				<p></p>
+			</div>
+			<p>
+				<h4 id="telUriLabel"></h4>
+				<input type="text" size="60" class="input-text" name="telephonyUri" id="telephonyUri">
+				<div class="description" id="telUriDescription"></div>
+			</p>
+			<p>
+				<h4></h4>
+				<button type="button" class="button button-disabled" id="saveConfig" value="Save"></button>
+				<div id="statusMessage" class="message"></div>
+				<button type="button" class="button" id="cancelConfig" value="Cancel" style="float: right;"></button>
+			</p>
+		</div>
+	</body>
+	<script src="/scripts/cisco_dialer_sjcl.js"></script>
+	<script src="/scripts/cisco_dialer_config.js"></script>
+</html>

@@ -1,0 +1,86 @@
+﻿{
+  "extension_name": {
+    "message": "Cisco Dialer",
+    "description": "Name der Erweiterung"
+  },
+  "extension_description": {
+    "message": "Per Knopfdruck wählt dein Cisco Telefon eine Nummer direkt aus deinen Google Kontakten heraus.",
+    "description": "Text der beschreibt was diese Erweiterung tut"
+  },
+  "dial_label": {
+	"message": "$label$ wählen",
+	"description": "Text der auf dem tooltip gezeigt wird",
+	"placeholders": {
+      "label": {
+        "content": "$1",
+        "example": "Geschäftlich"
+      }
+	}
+  },
+  "error_connection_failed": {
+    "message": "Verbindung mit dem Telefon fehlgeschlagen.",
+	"description": "Fehlermeldung wenn die Verbindung zum Telefon fehlschlägt"
+  },
+  "error_dial_failed": {
+    "message": "Wählvorgang fehlgeschlagen mit Fehler: $code$ - $text$.",
+	"description": "Fehlermeldung wenn das Telefon einen Fehler zurück gibt",
+	"placeholders": {
+      "code": {
+        "content": "$1",
+        "example": "403"
+      },
+      "text": {
+        "content": "$2",
+        "example": "Nicht gefunden"
+      }	  
+	}
+  },
+  "options_saved": {
+    "message": "Einstellungen gespeichert",
+	"description": "Nachricht die angezeigt wird wenn die Einstellungen gespeichert wurden"
+  },
+  "options_title": {
+    "message": "Cisco Dialer Konfiguration",
+	"description": "Titel für die Einstellungs-Seite"
+  },
+  "options_label_phone_address": {
+    "message": "Adresse des Telefons",
+	"description": "Kennzeichnung der Telefon-Adress Option"
+  },
+  "options_description_phone_address": {
+    "message": "IP Adresse oder Name deines Cisco Telefons. Der Web-Server Port kann hinzugefügt werden falls dieser sich vom Standart unterscheidet.",
+	"description": "Beschreibung für die Telefon-Adress Option"
+  },
+  "options_label_auth_config": {
+    "message": "Authentifizierung",
+	"description": "Kennzeichnung für die Authentifizierungs Optionen"
+  },
+  "options_description_auth_config": {
+    "message": "Gebe hier deinen Benutzernamen und dein Passwort ein falls dein Telefon dies Verlangt. Andernfalls diese Felder Bitte leer lassen.",
+	"description": "Beschreibung der Authentifizierungs Optionen"
+  },
+  "options_label_username": {
+    "message": "Benutzername",
+	"description": "Kennzeichnung der Benutzernamen Option"
+  },
+  "options_label_password": {
+    "message": "Passwort",
+	"description": "Kennzeichnung der Passwort Option"
+  },
+  "options_label_telephony_uri": {
+    "message": "Telefon URI",
+	"description": "Kennzeichnung für die Telefon URI Option"
+  },
+  "options_description_telephony_uri": {
+    "message": "Diese URI wird auf deinem Telefon ausgeführt um eine Nummer zu wählen. Der Ausdruck <b>{number}</b> wird durch die Nummer des Selektierten Eintrags ersetzt.<br>Wenn du eine Zahl vorwählen musst, um raus Telefonieren zu können, kannst du diese der URI hinzufügen. <b>Dial:9{number}</b> würde zum Beispiel immer eine <b>9</b> vor jeder Nummer wählen.",
+	"description": "Beschreibung der Telefon URI option"
+  },
+  "options_button_save": {
+    "message": "Speichern",
+	"description": "Text auf dem Speichern Knopf"
+  },
+  "options_button_cancel": {
+    "message": "Abbrechen",
+	"description": "Text auf dem Abbrechen Knopf"
+  }
+}

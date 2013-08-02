@@ -1,0 +1,86 @@
+﻿{
+  "extension_name": {
+    "message": "Cisco Dialer",
+    "description": "Name of the extension"
+  },
+  "extension_description": {
+    "message": "Let your Cisco phone dial a number by the click of a button right within your Google Contacts.",
+    "description": "Text that describes what this extension does"
+  },
+  "dial_label": {
+	"message": "Dial $label$",
+	"description": "Text shown on the tooltip",
+	"placeholders": {
+      "label": {
+        "content": "$1",
+        "example": "Work phone"
+      }
+	}
+  },
+  "error_connection_failed": {
+    "message": "Couldn't connect to phone.",
+	"description": "Error text if the connection to the phone failed"
+  },
+  "error_dial_failed": {
+    "message": "Dial failed with error: $code$ - $text$.",
+	"description": "Error text if the phone returns an error code",
+	"placeholders": {
+      "code": {
+        "content": "$1",
+        "example": "403"
+      },
+      "text": {
+        "content": "$2",
+        "example": "Not Found"
+      }	  
+	}
+  },
+  "options_saved": {
+    "message": "Settings Saved",
+	"description": "Message to show after settings have been saved"
+  },
+  "options_title": {
+    "message": "Cisco Dialer Configuration",
+	"description": "Title for the options page"
+  },
+  "options_label_phone_address": {
+    "message": "Phone Address",
+	"description": "Label for the phone address option"
+  },
+  "options_description_phone_address": {
+    "message": "IP address or hostname of your Cisco IP phone. You can also add the web server port if you use a port other then the default.",
+	"description": "Description for the phone address option"
+  },
+  "options_label_auth_config": {
+    "message": "Authentication",
+	"description": "Label for the auth config options"
+  },
+  "options_description_auth_config": {
+    "message": "Enter your username and password in case your phone requests it for authentication. Leave the fields blank otherwise.",
+	"description": "Description for the auth config options"
+  },
+  "options_label_username": {
+    "message": "Username",
+	"description": "Label for the user name option"
+  },
+  "options_label_password": {
+    "message": "Password",
+	"description": "Label for the password option"
+  },
+  "options_label_telephony_uri": {
+    "message": "Telephony URI",
+	"description": "Label for the telephony URI option"
+  },
+  "options_description_telephony_uri": {
+    "message": "This URI will be executed on your phone to dial a number. The term <b>{number}</b> will be replaced by the number of the selected entry.<br>If you need a prefix to dial out you can also add it to the URI e.g. <b>Dial:9{number}</b> will always dial a <b>9</b> before the number.",
+	"description": "Description for the telephony URI option"
+  },
+  "options_button_save": {
+    "message": "Save",
+	"description": "Text on the save button"
+  },
+  "options_button_cancel": {
+    "message": "Cancel",
+	"description": "Text on the cancel button"
+  }
+}
