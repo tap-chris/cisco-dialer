@@ -102,42 +102,11 @@ function ciscoUpdatePage(subTreeModifiedEvent) {
 	};
 }
 
-function ciscoSetDestinationUri(phoneAdress) {
-	document.ciscoConfig.destinationUri = 'http://' + phoneAdress + '/CGI/Execute';	
-}
-
-function ciscoSetDialCommand(telephonyUri) {
-	document.ciscoConfig.dialCommandXml =
-		'<CiscoIPPhoneExecute><ExecuteItem Priority="0" URL="' +
-		telephonyUri.replace('"', '') + '"/></CiscoIPPhoneExecute>';
-}
-
-function ciscoSetAuthUser(user) {
-	document.ciscoConfig.authUser = user ? user : '';
-}
-
-function ciscoSetAuthSecret(secret) {
-	document.ciscoConfig.authSecret = secret ? sjcl.decrypt(
-		sjcl.getSecret(document.ciscoConfig.phoneAdress), atob(secret)) : '';
-}
-
-function ciscoSetAuth(user, secret) {
-	ciscoSetAuthUser(user);
-	ciscoSetAuthSecret(secret);
-}
-
-function ciscoConfigChanged() {
-	if (document.ciscoConfig.enabled) {
+function ciscoInitStyles() {
+	if (!document.ciscoConfig) {
 		return;
 	}
 
-	if (document.ciscoConfig.destinationUri && document.ciscoConfig.dialCommandXml) {
-		document.addEventListener('DOMSubtreeModified', ciscoUpdatePage, false);
-		document.ciscoConfig.enabled = true;
-	}	
-}
-
-function ciscoInitStyles() {
 	if (document.domain == 'mail.google.com') {
 		document.ciscoConfig.styles = {
 			'entryClass': 'acq',
@@ -158,45 +127,72 @@ function ciscoInitStyles() {
 	}
 }
 
+function ciscoSetDestinationUri(phoneAdress) {
+	document.ciscoConfig.destinationUri = 'http://' + phoneAdress + '/CGI/Execute';	
+}
+
+function ciscoSetDialCommand(telephonyUri) {
+	document.ciscoConfig.dialCommandXml =
+		'<CiscoIPPhoneExecute><ExecuteItem Priority="0" URL="' +
+		telephonyUri.replace('"', '') + '"/></CiscoIPPhoneExecute>';
+}
+
+function ciscoSetAuthUser(user) {
+	document.ciscoConfig.authUser = user ? user : '';
+}
+
+function ciscoSetAuthSecret(secret) {
+	document.ciscoConfig.authSecret = secret ? sjcl.decrypt(
+		sjcl.getSecret(document.ciscoConfig.phoneAdress), atob(secret)) : '';
+}
+
+function ciscoConfigChanged() {
+	if (document.ciscoConfig.enabled) {
+		return;
+	}
+
+	if (document.ciscoConfig.destinationUri && document.ciscoConfig.dialCommandXml) {
+		document.addEventListener('DOMSubtreeModified', ciscoUpdatePage, false);
+		document.ciscoConfig.enabled = true;
+	}	
+}
+
+function ciscoConfigCallback(storage) {
+	if (storage.phoneAdress) {
+		document.ciscoConfig.phoneAdress = typeof storage.phoneAdress == 'object'
+			? storage.phoneAdress.newValue : storage.phoneAdress;
+		ciscoSetDestinationUri(document.ciscoConfig.phoneAdress);
+	}
+
+	if (storage.telephonyUri) {
+		ciscoSetDialCommand(typeof storage.telephonyUri == 'object'
+			? storage.telephonyUri.newValue : storage.telephonyUri);
+	}
+
+	if (storage.authUser) {
+		ciscoSetAuthUser(typeof storage.authUser == 'object'
+			? storage.authUser.newValue : storage.authUser);
+	}
+
+	if (storage.authSecret) {
+		ciscoSetAuthSecret(typeof storage.authSecret == 'object'
+			? storage.authSecret.newValue : storage.authSecret);
+	}
+
+	ciscoConfigChanged();
+}
+
 function ciscoInitConfig() {
 	document.ciscoConfig = {
 		'enabled': false,
 		'normalizeNumber': true
 	};
-	ciscoInitStyles();
 
-	chrome.storage.sync.get([
-		'phoneAdress', 'telephonyUri', 'authUser', 'authSecret'
-	], function(storage) {
-		if (storage.phoneAdress) {
-			document.ciscoConfig.phoneAdress = storage.phoneAdress;
-			ciscoSetDestinationUri(storage.phoneAdress);
-		}
-		if (storage.telephonyUri) {
-			ciscoSetDialCommand(storage.telephonyUri);
-		}
-
-		ciscoSetAuth(storage.authUser, storage.authSecret);
-		ciscoConfigChanged();
-	});
-
-	chrome.storage.onChanged.addListener(function(changes, namespace) {
-		if (changes.phoneAdress) {
-			document.ciscoConfig.phoneAdress = changes.phoneAdress.newValue;
-			ciscoSetDestinationUri(changes.phoneAdress.newValue);
-		}
-		if (changes.telephonyUri) {
-			ciscoSetDialCommand(changes.telephonyUri.newValue);
-		}
-		if (changes.authUser) {
-			ciscoSetAuthUser(changes.authUser.newValue);
-		}
-		if (changes.authSecret) {
-			ciscoSetAuthSecret(changes.authSecret.newValue);
-		}
-
-		ciscoConfigChanged();
-	});
+	chrome.storage.sync.get(
+		['phoneAdress', 'telephonyUri', 'authUser', 'authSecret'],
+		ciscoConfigCallback);
+	chrome.storage.onChanged.addListener(ciscoConfigCallback);
 }
 
 ciscoInitConfig();
+ciscoInitStyles();
