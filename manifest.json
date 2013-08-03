@@ -2,7 +2,8 @@
 	"manifest_version": 2,
 	"name": "__MSG_extension_name__",
 	"description": "__MSG_extension_description__",
-	"version": "1.0.4",
+	"version": "1.0.5",
+	"minimum_chrome_version": "18",
 	"author": "Christian Volmering <christian@volmering.name>",
 	"default_locale": "en",
 	"icons": {
@@ -14,7 +15,13 @@
 		"storage",
 		"notifications",
 		"*://mail.google.com/*",
-		"*://www.google.com/contacts/*"
+		"*://www.google.com/contacts/*",
+		
+		/* Currently it's not possible to use wildcards in optional permissions
+		 * thus we have to set this many permissions for the extension until
+		 * this issue is fixed.
+		 */
+		"*://*/CGI/Execute"
 	],
 	"optional_permissions": [
 		"*://*/CGI/Execute"
