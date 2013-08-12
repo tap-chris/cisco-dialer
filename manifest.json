@@ -16,6 +16,7 @@
 		"notifications",
 		"*://mail.google.com/*",
 		"*://www.google.com/contacts/*",
+		"*://www.google.de/contacts/*",
 		
 		/* Currently it's not possible to use wildcards in optional permissions
 		 * thus we have to set this many permissions for the extension until
@@ -29,7 +30,8 @@
 	"content_scripts": [{
 		"matches": [
 			"*://mail.google.com/*",
-			"*://www.google.com/contacts/*"
+			"*://www.google.com/contacts/*",
+			"*://www.google.de/contacts/*"
 		],
 		"js": [
 			"/scripts/cisco_dialer_sjcl.js",
