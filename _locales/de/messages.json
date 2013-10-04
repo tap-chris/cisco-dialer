@@ -75,6 +75,14 @@
 		"message": "Diese URI wird auf deinem Telefon ausgeführt um eine Nummer zu wählen. Der Ausdruck <b>{number}</b> wird durch die Nummer des Selektierten Eintrags ersetzt.<br>Wenn du eine Zahl vorwählen musst, um raus Telefonieren zu können, kannst du diese der URI hinzufügen. <b>Dial:9{number}</b> würde zum Beispiel immer eine <b>9</b> vor jeder Nummer wählen.",
 		"description": "Beschreibung der Telefon URI option"
 	},
+	"options_label_int_exit_code": {
+		"message": "Internationale Verkehrsausscheidungsziffer",
+		"description": "Kennzeichnung für die Internationale Verkehrsausscheidungsziffer Option"
+	},
+	"options_description_int_exit_code": {
+		"message": "Bitte gebe hier die Internationale Verkehrsausscheidungsziffer ein. Diese wird verwendet um das <b>+</b> Vorzeichen zu ersetzen welches anzeigt das eine Internationale Verkehrsausscheidungsziffer benötigt wird um die Nummer zu wählen. Für Deutschland ist dies die <b>00</b>. In den USA und Canada ist es die <b>011</b>. Und dergleichen...",
+		"description": "Beschreibung für die Internationale Verkehrsausscheidungsziffer Option"
+	},
 	"options_button_save": {
 		"message": "Speichern",
 		"description": "Text auf dem Speichern Knopf"

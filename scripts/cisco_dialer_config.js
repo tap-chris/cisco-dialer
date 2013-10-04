@@ -1,6 +1,6 @@
 /*
  *   Cisco Dialer - Chrome Extension
- *   Copyright (C) 2013 Christian Volmering <chris@theartproject.ch>
+ *   Copyright (C) 2013 Christian Volmering <christian@volmering.name>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ function configChanged() {
 
 function restoreConfig(options) {
 	if (!options) {
-		options = ['phoneAdress', 'telephonyUri', 'authUser', 'authSecret'];
+		options = ['phoneAdress', 'telephonyUri', 'intExitCode', 'authUser', 'authSecret'];
 	}
 
 	chrome.storage.sync.get(options, function(myStorage) {
@@ -44,6 +44,31 @@ function restoreConfig(options) {
 		}
 		else if (!telephonyUri.value.trim()) {
 			telephonyUri.value = 'Dial:{number}';
+		}
+
+		var intExitCode = document.getElementById('intExitCode');
+		if (myStorage.intExitCode) {
+			intExitCode.value = myStorage.intExitCode;
+		}
+		else if (!intExitCode.value.trim() && !myStorage.phoneAdress) {
+			// todo: Use location api instead
+			switch (window.navigator.language)
+			{
+				case 'de':
+				case 'fr':
+				case 'en-GB':
+					intExitCode.value = '00';
+					break;
+				case 'en':
+				case 'en-US':
+					intExitCode.value = '011';
+					break;
+				case 'ru':
+					intExitCode.value = '001';
+					break;				
+				default:
+					intExitCode.value = '';
+			}
 		}
 
 		if (myStorage.authUser) {
@@ -72,7 +97,8 @@ function saveConfig() {
 	}, function(permissionGranted) {
 		var saveOptions = {
 			'telephonyUri': telephonyUri,
-			'authUser': document.getElementById('authUser').value
+			'authUser': document.getElementById('authUser').value,
+			'intExitCode': document.getElementById('intExitCode').value
 		};
 
 		if (permissionGranted) {
@@ -101,6 +127,7 @@ function saveConfig() {
 function cancelConfig() {
 	document.getElementById('phoneAdress').value
 		= document.getElementById('telephonyUri').value
+		= document.getElementById('intExitCode').value
 		= document.getElementById('authUser').value
 		= document.getElementById('authSecret').value
 		= '';
@@ -120,6 +147,8 @@ function initLanguage() {
 		"authPassLabel": "options_label_password",
 		"telUriLabel": "options_label_telephony_uri",
 		"telUriDescription": "options_description_telephony_uri",
+		"intExitCodeLabel": "options_label_int_exit_code",
+		"intExitCodeDescription": "options_description_int_exit_code",
 		"saveConfig": "options_button_save",
 		"cancelConfig": "options_button_cancel"
 	};

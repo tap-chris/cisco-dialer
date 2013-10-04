@@ -1,6 +1,6 @@
 /*
  *   Cisco Dialer - Chrome Extension
- *   Copyright (C) 2013 Christian Volmering <chris@theartproject.ch>
+ *   Copyright (C) 2013 Christian Volmering <christian@volmering.name>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -91,6 +91,10 @@ function ciscoUpdatePage(subTreeModifiedEvent) {
 				dialNumber = dialNumber.replace(/[\.\-\(\)\[\]\{\}\/\s]/g, '');
 			}
 			
+			if (document.ciscoConfig.replacePlusPrefix) {
+				dialNumber = dialNumber.replace(/^\+/, document.ciscoConfig.intExitCode);
+			}
+			
 			ciscoSendXmlRequest(
 				document.ciscoConfig.destinationUri,
 				document.ciscoConfig.dialCommandXml.replace(/{number}/, dialNumber),
@@ -137,6 +141,13 @@ function ciscoSetDialCommand(telephonyUri) {
 		telephonyUri.replace('"', '') + '"/></CiscoIPPhoneExecute>';
 }
 
+function ciscoSetInternationalExitCode(intExitCode) {
+	if (intExitCode) {
+		document.ciscoConfig.intExitCode = intExitCode;
+		document.ciscoConfig.replacePlusPrefix = true;
+	}
+}
+
 function ciscoSetAuthUser(user) {
 	document.ciscoConfig.authUser = user ? user : '';
 }
@@ -168,6 +179,11 @@ function ciscoConfigCallback(storage) {
 		ciscoSetDialCommand(typeof storage.telephonyUri == 'object'
 			? storage.telephonyUri.newValue : storage.telephonyUri);
 	}
+	
+	if (storage.intExitCode) {
+		ciscoSetInternationalExitCode(typeof storage.intExitCode == 'object'
+			? storage.intExitCode.newValue : storage.intExitCode);
+	}
 
 	if (storage.authUser) {
 		ciscoSetAuthUser(typeof storage.authUser == 'object'
@@ -185,11 +201,12 @@ function ciscoConfigCallback(storage) {
 function ciscoInitConfig() {
 	document.ciscoConfig = {
 		'enabled': false,
-		'normalizeNumber': true
+		'normalizeNumber': true,
+		'replacePlusPrefix': false
 	};
 
 	chrome.storage.sync.get(
-		['phoneAdress', 'telephonyUri', 'authUser', 'authSecret'],
+		['phoneAdress', 'telephonyUri', 'intExitCode', 'authUser', 'authSecret'],
 		ciscoConfigCallback);
 	chrome.storage.onChanged.addListener(ciscoConfigCallback);
 }

@@ -75,6 +75,14 @@
 		"message": "This URI will be executed on your phone to dial a number. The term <b>{number}</b> will be replaced by the number of the selected entry.<br>If you need a prefix to dial out you can also add it to the URI e.g. <b>Dial:9{number}</b> will always dial a <b>9</b> before the number.",
 		"description": "Description for the telephony URI option"
 	},
+	"options_label_int_exit_code": {
+		"message": "International Exit Code",
+		"description": "Label for the international exit code option"
+	},
+	"options_description_int_exit_code": {
+		"message": "Please fill in your international exit code here. This will be used to substitute the <b>+</b> prefix wich is indicating that a exit code is needed to dial the number. If you are living in Germany, your exit code is <b>00</b>. If you live in the US or Canada, your exit code is <b>011</b>. And so forth...",
+		"description": "Description for the international exit code option"
+	},
 	"options_button_save": {
 		"message": "Save",
 		"description": "Text on the save button"
