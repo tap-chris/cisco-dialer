@@ -1,53 +1,78 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-		<title id="pageTitle"></title>
-		<link href="/styles/cisco_dialer_config.css" rel="stylesheet" type="text/css">
-	</head>
-	<body>
-		<div id="container">
-			<div id="header">
-				<img src="/images/extension_icon_48.png" alt="Extension Logo">
-				<h2 id="headerTitle"></h2>
-			</div>
-			<p>
-				<h4 id="phoneAddressLabel"></h4>
-				<input type="text" size="60" class="input-text" name="phoneAdress" id="phoneAdress">
-				<div class="description" id="phoneAddressDescription"></div>
-			</p>
-			<h4 id="authConfigLabel"></h4>
-			<div id="authContainer">
-				<p></p>
-				<div class="left">					
-					<h4 id="authUserLabel"></h4>
-					<input type="text" size="30" class="input-text" name="authUser" id="authUser">
-				</div>
-				<div>
-					<h4 id="authPassLabel"></h4>
-					<input type="password" size="30" class="input-text" name="authSecret" id="authSecret">
-				</div>
-				<div class="description" id="authConfigDescription"></div>
-				<p></p>
-			</div>
-			<p>
-				<h4 id="intExitCodeLabel"></h4>
-				<input type="text" size="10" class="input-text" name="intExitCode" id="intExitCode">
-				<div class="description" id="intExitCodeDescription"></div>
-			</p>			
-			<p>
-				<h4 id="telUriLabel"></h4>
-				<input type="text" size="60" class="input-text" name="telephonyUri" id="telephonyUri">
-				<div class="description" id="telUriDescription"></div>
-			</p>
-			<p>
-				<h4></h4>
-				<button type="button" class="button button-disabled" id="saveConfig" value="Save"></button>
-				<div id="statusMessage" class="message"></div>
-				<button type="button" class="button" id="cancelConfig" value="Cancel" style="float: right;"></button>
-			</p>
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title id="pageTitle"></title>
+    <link href="/styles/cisco_dialer_config.css" rel="stylesheet" type="text/css">
+	<style>
+		p 				{ text-align: justify; }
+		div.container   { max-width: 600px; margin: 50px auto; }
+		div.settings    { display: block; margin: 0 15px; }
+		div.buttons     { margin: 0.8em 0; }
+		div.buttons > * { position: relative; float: left; margin-right: 15px !important; }
+		div.message		{ color: #F03; margin-top: 3px; }
+	</style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 id="headerTitle"></h1>
+		<hr/>
+		
+        <h3 id="phoneAddressLabel"></h3>
+		<div class="settings">
+            <input type="text" size="55" name="phoneAdress" id="phoneAdress" />
+			<p></p>
+            <div id="phoneAddressDescription"></div>
+        </div>
+		
+        <h3 id="authConfigLabel"></h3>
+        <div class="settings">
+            <input type="text" size="25" name="authUser" id="authUser" />
+            <input type="password" size="24" name="authSecret" id="authSecret" />
+            <p id="authConfigDescription"></p>
+        </div>
+        
+        <h3 id="countryCodeLabel"></h3>
+		<div class="settings">
+			<select name="countryCode" id="countryCode"></select>
+			<p id="countryCodeDescription"></p>
 		</div>
-	</body>
-	<script src="/scripts/cisco_dialer_sjcl.js"></script>
-	<script src="/scripts/cisco_dialer_config.js"></script>
+        
+        <h3 id="telUriLabel"></h3>
+		<div class="settings">
+			<input type="text" size="55" name="telephonyUri" id="telephonyUri" />
+			<p id="telUriDescription"></p>
+		</div>
+
+        <h3 id="functionsLabel"></h3>
+		<div class="settings">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="true" name="contextMenu" id="contextMenu" /><span id="contextMenuLabel"></span> 
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="true" name="inPageDial" id="inPageDial" /><span id="inPageDialLabel"></span>
+                </label>
+            </div>
+ 		</div>
+		
+		<p></p>
+		
+		<div class="buttons">
+			<button id="saveConfig" value="Save" disabled></button>
+			<button id="cancelConfig" value="Cancel"></button>
+			<div id="statusMessage" class="message"></div>
+		</div>
+    </div>
+</body>
+
+<script src="/scripts/cisco_dialer_sjcl.js"></script>
+<script src="/scripts/cisco_dialer_phone.js"></script>
+<script src="/scripts/cisco_dialer_classes.js"></script>
+<script src="/scripts/cisco_dialer_config.js"></script>
+
 </html>

@@ -1,6 +1,6 @@
 /*
  *   Cisco Dialer - Chrome Extension
- *   Copyright (C) 2013 Christian Volmering <christian@volmering.name>
+ *   Copyright (C) 2014 Christian Volmering <christian@volmering.name>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,161 +15,151 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+var ciscoDialerConfig = new function () {
+    this.lingualFields = {
+        "pageTitle": "options_title",
+        "headerTitle": "options_title",
+        "phoneAddressLabel": "options_label_phone_address",
+        "phoneAddressDescription": "options_description_phone_address",
+        "authConfigLabel": "options_label_auth_config",
+        "authConfigDescription": "options_description_auth_config",
+        "authUser": "options_placeholder_username",
+        "authSecret": "options_placeholder_password",
+        "telUriLabel": "options_label_telephony_uri",
+        "telUriDescription": "options_description_telephony_uri",
+        "countryCodeLabel": "options_label_country_code",
+        "countryCodeDescription": "options_description_country_code",
+		"functionsLabel": "options_label_functions",
+		"contextMenuLabel": "options_label_context_menu",
+		"inPageDialLabel": "options_label_inpage_dial",
+        "saveConfig": "options_button_save",
+        "cancelConfig": "options_button_cancel"
+    };
 
-function configChanged() {
-	var saveButton = document.getElementById('saveConfig');
+    this.requiredFields = [
+        "phoneAdress",
+        "telephonyUri",
+		"countryCode"
+    ];
 
-	if (document.getElementById('phoneAdress').value && document.getElementById('telephonyUri').value) {
-		saveButton.className = saveButton.className.replace(' button-disabled', '');
-	}
-	else {
-		saveButton.className += ' button-disabled';
-	} 
-}
-
-function restoreConfig(options) {
-	if (!options) {
-		options = ['phoneAdress', 'telephonyUri', 'intExitCode', 'authUser', 'authSecret'];
-	}
-
-	chrome.storage.sync.get(options, function(myStorage) {
-		if (myStorage.phoneAdress) {
-			document.ciscoConfig.phoneAdress = 
-				document.getElementById('phoneAdress').value = myStorage.phoneAdress;
-		}
-
-		var telephonyUri = document.getElementById('telephonyUri');
-		if (myStorage.telephonyUri) {
-			telephonyUri.value = myStorage.telephonyUri;
-		}
-		else if (!telephonyUri.value.trim()) {
-			telephonyUri.value = 'Dial:{number}';
-		}
-
-		var intExitCode = document.getElementById('intExitCode');
-		if (myStorage.intExitCode) {
-			intExitCode.value = myStorage.intExitCode;
-		}
-		else if (!intExitCode.value.trim() && !myStorage.phoneAdress) {
-			// todo: Use location api instead
-			switch (window.navigator.language)
-			{
-				case 'de':
-				case 'fr':
-				case 'en-GB':
-					intExitCode.value = '00';
-					break;
-				case 'en':
-				case 'en-US':
-					intExitCode.value = '011';
-					break;
-				case 'ru':
-					intExitCode.value = '001';
-					break;				
-				default:
-					intExitCode.value = '';
-			}
-		}
-
-		if (myStorage.authUser) {
-			document.getElementById('authUser').value = myStorage.authUser;
+	this.getCountryOptions = function (selected) {
+		var options = selected ? '' : '<option></option>';
+		for (var countryCode in countryCodes) {
+			options += '<option value="' + countryCode 
+				+ '"' + (countryCode == selected ? ' selected' : '') + '>'
+				+ countryCodes[countryCode] + '</option>'; // FIXME: Add i18n
 		}
 		
-		if (myStorage.authSecret) {
-			document.getElementById('authSecret').value = sjcl.decrypt(
-				sjcl.getSecret(document.ciscoConfig.phoneAdress), atob(myStorage.authSecret));
-		}
-		
-		configChanged();
-	});
-}
-
-function saveConfig() {
-	var phoneAdress = document.getElementById('phoneAdress').value;
-	var telephonyUri = document.getElementById('telephonyUri').value;
-
-	if (!(phoneAdress && telephonyUri)) {
-		return;
-	}
-
-	chrome.permissions.request({
-		origins: ['http://' + phoneAdress + '/CGI/Execute']
-	}, function(permissionGranted) {
-		var saveOptions = {
-			'telephonyUri': telephonyUri,
-			'authUser': document.getElementById('authUser').value,
-			'intExitCode': document.getElementById('intExitCode').value
-		};
-
-		if (permissionGranted) {
-			document.ciscoConfig.phoneAdress = 
-				saveOptions.phoneAdress = phoneAdress;
-		}
-		else {
-			restoreConfig(['phoneAdress']);
-		}
-
-		saveOptions.authSecret = btoa(sjcl.encrypt(
-			sjcl.getSecret(document.ciscoConfig.phoneAdress),
-			document.getElementById('authSecret').value));
-
-		chrome.storage.sync.set(saveOptions, function() {
-			var statusMessage = document.getElementById('statusMessage');
-
-			statusMessage.innerHTML = chrome.i18n.getMessage('options_saved');
-			setTimeout(function() {
-				statusMessage.innerHTML = '';
-			}, 750);				
-		});			
-	});		
-}
-
-function cancelConfig() {
-	document.getElementById('phoneAdress').value
-		= document.getElementById('telephonyUri').value
-		= document.getElementById('intExitCode').value
-		= document.getElementById('authUser').value
-		= document.getElementById('authSecret').value
-		= '';
-
-	restoreConfig();
-}
-
-function initLanguage() {
-	var lingualFields = {
-		"pageTitle": "options_title",
-		"headerTitle": "options_title",
-		"phoneAddressLabel": "options_label_phone_address",
-		"phoneAddressDescription": "options_description_phone_address",
-		"authConfigLabel": "options_label_auth_config",
-		"authConfigDescription": "options_description_auth_config",
-		"authUserLabel": "options_label_username",
-		"authPassLabel": "options_label_password",
-		"telUriLabel": "options_label_telephony_uri",
-		"telUriDescription": "options_description_telephony_uri",
-		"intExitCodeLabel": "options_label_int_exit_code",
-		"intExitCodeDescription": "options_description_int_exit_code",
-		"saveConfig": "options_button_save",
-		"cancelConfig": "options_button_cancel"
+		return options;
 	};
-	
-	for (var fieldName in lingualFields) {
-		if (lingualFields.hasOwnProperty(fieldName)) {
-			document.getElementById(fieldName).innerHTML
-				= chrome.i18n.getMessage(lingualFields[fieldName]);
+
+	this.populateList = function (element, selected) {
+		if (element.id == 'countryCode') {
+			element.innerHTML = this.getCountryOptions(selected);
+		} 
+	};
+
+    this.loadLocale = function () {
+        for (var fieldName in this.lingualFields) {
+			var message = chrome.i18n.getMessage(this.lingualFields[fieldName]);
+			
+			if (this.lingualFields[fieldName].match(/placeholder/)) {
+				document.getElementById(fieldName).setAttribute('placeholder', message);
+            }
+			else if (this.lingualFields.hasOwnProperty(fieldName)) {
+                document.getElementById(fieldName).innerHTML = message;
+            }
+        }
+    };
+
+    this.restore = function () {
+        for (var option in ciscoDialer.configOptions) {
+            var value = ciscoDialer.configOptions[option];
+			var element = document.getElementById(option);
+            
+			if (element != undefined) {
+				if (element.nodeName.toLowerCase() == 'select') {
+					this.populateList(element, value);
+				}
+				else if (element.getAttribute('type') == 'checkbox') {
+					element.checked = value == 'true';
+				}
+				else {
+					element.value = option.match(/Secret/) ? (value ? ciscoDialer.decryptSecret(value) : '') : value;
+				}
+			}
+        }
+
+        this.changed();
+    };
+
+    this.valid = function () {
+        for (var index = 0, size = this.requiredFields.length; index < size; index++) {
+            if (!document.getElementById(this.requiredFields[index]).value.trim()) {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    this.changed = function () {
+        var saveButton = document.getElementById('saveConfig');
+		
+        if (!this.valid()) {
+            saveButton.setAttribute('disabled', '');
+        } else {
+            saveButton.removeAttribute('disabled');
+        }
+    };
+
+    this.save = function () {
+        if (!this.valid()) {
+            return;
+        }
+		
+        var phoneAdress = document.getElementById('phoneAdress').value;
+        chrome.permissions.request({
+            origins: ['http://' + phoneAdress + '/']
+        }, function (permissionGranted) {
+            if (permissionGranted) {
+                for (var option in ciscoDialer.configOptions) {
+					var element = document.getElementById(option);
+                    var value = element != undefined 
+						? element.value : ciscoDialer.configOptions[option];
+					
+					if (element.getAttribute('type') == 'checkbox') {
+						value = element.checked ? 'true' : 'false';
+					}
+					
+                    ciscoDialer.configOptions[option] = option.match(/Secret/)
+						? ciscoDialer.encryptSecret(value) : value.trim();
+                }
+				
+                chrome.storage.sync.set(ciscoDialer.configOptions, function () {
+                    var statusMessage = document.getElementById('statusMessage');
+					
+                    statusMessage.innerHTML = chrome.i18n.getMessage('options_saved');
+                    setTimeout(function () {
+                        statusMessage.innerHTML = '';
+                    }, 1250);
+                }.bind(this));
+            }
+        }.bind(this));
+    };
+
+    this.onContentLoaded = function () {
+        this.loadLocale();
+
+		for (var index = 0, size = this.requiredFields.length; index < size; index++) {
+			document.querySelector('#' + this.requiredFields[index]).addEventListener('input', this.changed.bind(this));
 		}
-	}
+		
+        document.querySelector('#saveConfig').addEventListener('click', this.save.bind(this));
+        document.querySelector('#cancelConfig').addEventListener('click', this.restore.bind(this));
+		
+        ciscoDialer.notifyOnChange(this.restore.bind(this));
+    };
+
+    document.addEventListener('DOMContentLoaded', this.onContentLoaded.bind(this), false);
 }
-
-function onContentLoaded() {
-	document.ciscoConfig = {};
-	initLanguage();
-	restoreConfig();
-
-	document.querySelector('#phoneAdress').addEventListener('input', configChanged);
-	document.querySelector('#telephonyUri').addEventListener('input', configChanged);
-	document.querySelector('#saveConfig').addEventListener('click', saveConfig);
-	document.querySelector('#cancelConfig').addEventListener('click', cancelConfig);
-}
-
-document.addEventListener('DOMContentLoaded', onContentLoaded, false);

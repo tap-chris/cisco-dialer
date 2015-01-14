@@ -59,11 +59,11 @@
 		"message": "Gebe hier deinen Benutzernamen und dein Passwort ein falls dein Telefon dies Verlangt. Andernfalls diese Felder Bitte leer lassen.",
 		"description": "Beschreibung der Authentifizierungs Optionen"
 	},
-	"options_label_username": {
+	"options_placeholder_username": {
 		"message": "Benutzername",
 		"description": "Kennzeichnung der Benutzernamen Option"
 	},
-	"options_label_password": {
+	"options_placeholder_password": {
 		"message": "Passwort",
 		"description": "Kennzeichnung der Passwort Option"
 	},
@@ -72,16 +72,28 @@
 		"description": "Kennzeichnung für die Telefon URI Option"
 	},
 	"options_description_telephony_uri": {
-		"message": "Diese URI wird auf deinem Telefon ausgeführt um eine Nummer zu wählen. Der Ausdruck <b>{number}</b> wird durch die Nummer des Selektierten Eintrags ersetzt.<br>Wenn du eine Zahl vorwählen musst, um raus Telefonieren zu können, kannst du diese der URI hinzufügen. <b>Dial:9{number}</b> würde zum Beispiel immer eine <b>9</b> vor jeder Nummer wählen.",
+		"message": "Diese URI wird auf deinem Telefon ausgeführt um eine Nummer zu wählen. Der Ausdruck <b>{number}</b> wird durch die Nummer des Selektierten Eintrags ersetzt. Wenn du eine Zahl vorwählen musst, um raus Telefonieren zu können, kannst du diese der URI hinzufügen. <b>Dial:9{number}</b> würde zum Beispiel immer eine <b>9</b> vor jeder Nummer wählen.",
 		"description": "Beschreibung der Telefon URI option"
 	},
-	"options_label_int_exit_code": {
-		"message": "Internationale Verkehrsausscheidungsziffer",
-		"description": "Kennzeichnung für die Internationale Verkehrsausscheidungsziffer Option"
+	"options_label_country_code": {
+		"message": "Land",
+		"description": "Kennzeichnung für die Landes Option"
 	},
-	"options_description_int_exit_code": {
-		"message": "Bitte gebe hier die Internationale Verkehrsausscheidungsziffer ein. Diese wird verwendet um das <b>+</b> Vorzeichen zu ersetzen welches anzeigt das eine Internationale Verkehrsausscheidungsziffer benötigt wird um die Nummer zu wählen. Für Deutschland ist dies die <b>00</b>. In den USA und Canada ist es die <b>011</b>. Und dergleichen...",
-		"description": "Beschreibung für die Internationale Verkehrsausscheidungsziffer Option"
+	"options_description_country_code": {
+		"message": "Wähle hier das Land aus in dem du dich befindest. Wenn du dich in einem anderen Land befindest wie dein Dienstleister, wähle sein Land aus.",
+		"description": "Beschreibung für die Landes Option"
+	},
+	"options_label_functions": {
+		"message": "Funktionen",
+		"description": "Kennzeichnung für den Funktions Block"
+	},
+	"options_label_context_menu": {
+		"message": "Wählen über das Kontextmenü aktivieren",
+		"description": "Kennzeichnung für die Context Menu Option"
+	},
+	"options_label_inpage_dial": {
+		"message": "Erkennung von Telefonnummern auf allen Internetseiten aktivieren (Beta)",
+		"description": "Kennzeichnung für die In Page Dial Option"		
 	},
 	"options_button_save": {
 		"message": "Speichern",

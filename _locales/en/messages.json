@@ -59,11 +59,11 @@
 		"message": "Enter your username and password in case your phone requests it for authentication. Leave the fields blank otherwise.",
 		"description": "Description for the auth config options"
 	},
-	"options_label_username": {
+	"options_placeholder_username": {
 		"message": "Username",
 		"description": "Label for the user name option"
 	},
-	"options_label_password": {
+	"options_placeholder_password": {
 		"message": "Password",
 		"description": "Label for the password option"
 	},
@@ -75,13 +75,25 @@
 		"message": "This URI will be executed on your phone to dial a number. The term <b>{number}</b> will be replaced by the number of the selected entry.<br>If you need a prefix to dial out you can also add it to the URI e.g. <b>Dial:9{number}</b> will always dial a <b>9</b> before the number.",
 		"description": "Description for the telephony URI option"
 	},
-	"options_label_int_exit_code": {
-		"message": "International Exit Code",
-		"description": "Label for the international exit code option"
+	"options_label_country_code": {
+		"message": "Country",
+		"description": "Label for the country option"
 	},
-	"options_description_int_exit_code": {
-		"message": "Please fill in your international exit code here. This will be used to substitute the <b>+</b> prefix wich is indicating that a exit code is needed to dial the number. If you are living in Germany, your exit code is <b>00</b>. If you live in the US or Canada, your exit code is <b>011</b>. And so forth...",
-		"description": "Description for the international exit code option"
+	"options_description_country_code": {
+		"message": "Choose here in wich country you are living in. If you are located in a different country then your provider, choose his country.",
+		"description": "Description for the country option"
+	},
+	"options_label_functions": {
+		"message": "Functions",
+		"description": "Label for the Functions Block"
+	},
+	"options_label_context_menu": {
+		"message": "Activate dial via the contextmenu",
+		"description": "Label for the context menu option"
+	},
+	"options_label_inpage_dial": {
+		"message": "Activate detection of phone numbers on all websites (Beta)",
+		"description": "Label for the in page dial option"		
 	},
 	"options_button_save": {
 		"message": "Save",
