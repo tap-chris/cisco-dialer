@@ -1,6 +1,6 @@
 /*
  *   Cisco Dialer - Chrome Extension
- *   Copyright (C) 2014 Christian Volmering <christian@volmering.name>
+ *   Copyright (C) 2015 Christian Volmering <christian@volmering.name>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,8 +24,13 @@ var ciscoDialerContentScript = new function () {
 		return (typeof node.className == 'string' ? node.className : '').match(/cisco_parsed/) != null;
 	};
 	
-	this.setParsed = function (node) {
-		node.className += (node.className ? ' ' : '') + 'cisco_parsed';
+	this.setParsed = function (node, value) {
+		if (value) {
+			node.className += (node.className ? ' ' : '') + 'cisco_parsed';
+		}
+		else {
+			node.className = node.className.replace(/\s?cisco_parsed/, '');
+		}
 	};
 	
 	this.numberToRegexp = function (number) {
@@ -55,12 +60,16 @@ var ciscoDialerContentScript = new function () {
 		return { top: Math.round(top), left: Math.round(left) };
 	}
 
-	this.updateDialLinks = function (rootNode, className) { // FIXME: cleanup
-		var links = rootNode.getElementsByClassName(className);
+	this.setTooltipState = function (state) {
+		this.tooltip.setAttribute('class', 'cisco_tooltip cisco_' + state);
+	}; 
+
+	this.updateDialLinks = function (rootNode) {
+		var links = rootNode.getElementsByTagName('dial');
 		var linkCount = links.length;
 		
 		for (var linkIndex = 0; linkIndex < linkCount; linkIndex++) {
-			var phoneNumber = links[linkIndex].getAttribute('cisco-dial');
+			var phoneNumber = links[linkIndex].getAttribute('number');
 						
 			links[linkIndex].onmouseover = function (onMouseOverEvent) {
 				var rect = this.getOffsetRect(onMouseOverEvent.target);
@@ -73,26 +82,29 @@ var ciscoDialerContentScript = new function () {
 				
 				this.tooltip.onclick = function (onClickEvent) {
 					new ciscoDialerPhoneNumber(phoneNumber).dial();
-					this.tooltip.setAttribute('class', 'cisco_tooltip cisco_hidden');
+					this.setTooltipState('hidden');
 				}.bind(this);
 
-				this.tooltip.onmouseover = function (onMouseOverEvent) {
-					this.tooltip.setAttribute('class', 'cisco_tooltip cisco_hover');
-				}.bind(this);
-
-				this.tooltip.onmouseout = function (onMouseOutEvent) {
-					this.tooltip.setAttribute('class', 'cisco_tooltip cisco_hidden');
-				}.bind(this);
+				this.tooltip.onmouseover = function (onMouseOverEvent) { this.setTooltipState('hover'); }.bind(this);
+				this.tooltip.onmouseout = function (onMouseOutEvent) { this.setTooltipState('hidden'); }.bind(this);
 			}.bind(this);
 			
-			links[linkIndex].onmouseout = function (onMouseOutEvent) {
-				this.tooltip.setAttribute('class', 'cisco_tooltip cisco_hidden');
-			}.bind(this);
+			links[linkIndex].onmouseout = function (onMouseOutEvent) { this.setTooltipState('hidden'); }.bind(this);
 		}
 	};
 	
-	this.removeLinks = function (rootNode, className) {
-		// FIXME: Remove the links again
+	this.removeLinks = function (rootNode) {
+		var links = rootNode.getElementsByTagName('dial');
+		var linkCount = links.length;
+		
+		for (var linkIndex = 0; linkIndex < linkCount; linkIndex++) {
+			var parentNode = links[linkIndex].parentNode;
+			
+			if (parentNode != undefined) {
+				parentNode.innerHTML = parentNode.innerHTML.replace(/<dial[^>]+>([^<]+)<\/dial>/, '$1');
+				this.setParsed(parentNode, false);
+			}
+		}
 	};
 	
 	this.parseTextNode = function (node) {
@@ -115,18 +127,18 @@ var ciscoDialerContentScript = new function () {
 	};
 		
 	this.replaceNumbers = function (node, phoneNumbers) {
-		this.setParsed(node);
+		this.setParsed(node, true);
 		
 		var nodeContent = node.innerHTML;
 		for (var numberIndex = 0; numberIndex < phoneNumbers.length; numberIndex++) {
 			var phoneNumber = phoneNumbers[numberIndex];
 			
 			nodeContent = nodeContent.replace(this.numberToRegexp(phoneNumber),
-				'<span class="cisco_link" cisco-dial="' + phoneNumber + '">$&</span>');
+				'<dial number="' + phoneNumber + '">$&</dial>');
 		}
 		
 		node.innerHTML = nodeContent;
-		this.updateDialLinks(node, 'cisco_link');
+		this.updateDialLinks(node);
 	};
 	
 	this.parseNode = function (node) {
@@ -185,11 +197,10 @@ var ciscoDialerContentScript = new function () {
 			
 			document.addEventListener('DOMNodeInserted', this.onNodeChanged.bind(this), true);
 			document.addEventListener('DOMCharacterDataModified', this.onNodeChanged.bind(this), true);
-			// DOMContentLoaded
         }
 		else if (this.listening && (sender.configOptions.inPageDial == 'false')) {
 			this.listening = false;
-			this.removeLinks(document.body, 'cisco_link');
+			this.removeLinks(document.body);
 		}
     };
 
