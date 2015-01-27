@@ -1,6 +1,6 @@
 /*
  *   Cisco Dialer - Chrome Extension
- *   Copyright (C) 2014 Christian Volmering <christian@volmering.name>
+ *   Copyright (C) 2015 Christian Volmering <christian@volmering.name>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by

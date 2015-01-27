@@ -1,10 +1,10 @@
 ﻿{
 	"extension_name": {
-		"message": "Cisco Dialer (Testing)",
+		"message": "Cisco Dialer (Beta)",
 		"description": "Name of the extension"
 	},
 	"extension_description": {
-		"message": "Let your Cisco phone dial a number by the click of a button right within your Google Contacts.",
+		"message": "Let your Cisco phone dial a number by the click of a button right within your Google Contacts or any site you visit.",
 		"description": "Text that describes what this extension does"
 	},
 	"dial_label": {
@@ -92,7 +92,7 @@
 		"description": "Label for the context menu option"
 	},
 	"options_label_inpage_dial": {
-		"message": "Activate detection of phone numbers on all websites (Beta)",
+		"message": "Activate detection of phone numbers on all websites <span class=\"red\">(Beta)</span>",
 		"description": "Label for the in page dial option"		
 	},
 	"options_button_save": {

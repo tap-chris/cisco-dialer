@@ -1,10 +1,10 @@
 ﻿{
 	"extension_name": {
-		"message": "Cisco Dialer (Testing)",
+		"message": "Cisco Dialer (Beta)",
 		"description": "Name der Erweiterung"
 	},
 	"extension_description": {
-		"message": "Per Knopfdruck wählt dein Cisco Telefon eine Nummer direkt aus deinen Google Kontakten heraus.",
+		"message": "Per Knopfdruck wählt dein Cisco Telefon eine Nummer direkt aus deinen Google Kontakten oder jeder besuchten Seite heraus.",
 		"description": "Text der beschreibt was diese Erweiterung tut"
 	},
 	"dial_label": {
@@ -92,7 +92,7 @@
 		"description": "Kennzeichnung für die Context Menu Option"
 	},
 	"options_label_inpage_dial": {
-		"message": "Erkennung von Telefonnummern auf allen Internetseiten aktivieren (Beta)",
+		"message": "Erkennung von Telefonnummern auf allen Internetseiten aktivieren <span class=\"red\">(Beta)</span>",
 		"description": "Kennzeichnung für die In Page Dial Option"		
 	},
 	"options_button_save": {

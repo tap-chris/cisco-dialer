@@ -15,7 +15,7 @@
 	position: absolute;
 	visibility: visible;
 	cursor: pointer;
-	background-image: url('chrome-extension://__MSG_@@extension_id__/images/dial_icon.png'); 
+	background-image: url('chrome-extension://__MSG_@@extension_id__/images/extension_icon_128.png'); 
 	background-repeat: no-repeat;
 	background-size: contain;
 	-webkit-border-top-right-radius: 10px;
