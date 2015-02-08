@@ -85,11 +85,14 @@ var ciscoDialerContentScript = new function () {
 					this.setTooltipState('hidden');
 				}.bind(this);
 
-				this.tooltip.onmouseover = function (onMouseOverEvent) { this.setTooltipState('hover'); }.bind(this);
-				this.tooltip.onmouseout = function (onMouseOutEvent) { this.setTooltipState('hidden'); }.bind(this);
+				this.tooltip.onmouseover = function (onMouseOverEvent) {
+					this.setTooltipState('hover'); }.bind(this);
+				this.tooltip.onmouseout = function (onMouseOutEvent) {
+					this.setTooltipState('hidden'); }.bind(this);
 			}.bind(this);
 			
-			links[linkIndex].onmouseout = function (onMouseOutEvent) { this.setTooltipState('hidden'); }.bind(this);
+			links[linkIndex].onmouseout = function (onMouseOutEvent) {
+				this.setTooltipState('hidden'); }.bind(this);
 		}
 	};
 	

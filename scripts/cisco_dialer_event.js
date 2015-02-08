@@ -17,6 +17,7 @@
  */
 var ciscoDialerEventHandler = new function () {
     this.contextMenuInstalled = false;
+	this.omniBoxInstalled = false;
 	this.configTabOpened = false;
 
     this.onContextMenuClick = function (info, tab) {
@@ -39,6 +40,21 @@ var ciscoDialerEventHandler = new function () {
 			chrome.contextMenus.remove(chrome.i18n.getMessage('@@extension_id'));
 		}
     };
+	
+	this.installOmniBox = function () {
+		if (!this.omniBoxInstalled) {
+			chrome.omnibox.onInputChanged.addListener(function(text, suggest) {
+				chrome.omnibox.setDefaultSuggestion({
+					description: chrome.i18n.getMessage('dial_label', text ? text : '...')});
+			});
+			
+			chrome.omnibox.onInputEntered.addListener(function(text) {
+				new ciscoDialerPhoneNumber(text).dial();
+			});
+			
+			this.omniBoxInstalled = true;
+		}
+	};
 
 	this.openConfigTab = function () {
 		if (!this.configTabOpened) {
@@ -47,18 +63,19 @@ var ciscoDialerEventHandler = new function () {
 					 + chrome.i18n.getMessage('@@extension_id')
 					 + chrome.runtime.getManifest().options_page,
 				active: true});
-
+				
 			this.configTabOpened = true;
 		}
 	}
 
     this.onInstalled = function () {
-		this.onConfigChanged(this);
+		this.onConfigChanged(this);		
 	};
 
     this.onConfigChanged = function (sender) {
         if (ciscoDialer.canDial()) {
             this.installContextMenu();
+			this.installOmniBox();
         }
 		else if (ciscoDialer.loaded) {
 			this.openConfigTab();

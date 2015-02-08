@@ -134,7 +134,7 @@ var ciscoDialer = new function () {
     };
 
     this.processEvents = function () {
-        chrome.runtime.onMessage.addListener(this.onRuntimeMessage.bind(this));
+        chrome.runtime.onMessage.addListener(this.onRuntimeMessage.bind(this));		
     };
 
     this.notifyOnChange = function (onChange) {
