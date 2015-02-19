@@ -127,7 +127,8 @@ var ciscoDialer = new function () {
         if (this.canDial()) {
             this.sendRuntimeMessage({
                 'dial': {
-                    'phoneNumber': new ciscoDialerPhoneNumber(phoneNumber).normalize().format(this.configOptions.countryCode).toString()
+                    'phoneNumber': new ciscoDialerPhoneNumber(phoneNumber).normalize().format(
+						this.configOptions.countryCode).toString()
                 }
             });
         }
@@ -145,7 +146,7 @@ var ciscoDialer = new function () {
     chrome.storage.onChanged.addListener(this.onConfigChanged.bind(this));
 }
 
-function ciscoDialerPhoneNumber(phoneNumber) {
+function ciscoDialerPhoneNumber (phoneNumber) {
     this.value = typeof phoneNumber == 'ciscoDialerPhoneNumber' ? phoneNumber.toString() : new String(phoneNumber);
 
     this.normalize = function () {
