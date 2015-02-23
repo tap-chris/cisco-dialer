@@ -79,6 +79,10 @@
 		"message": "Land",
 		"description": "Kennzeichnung für die Landes Option"
 	},
+	"options_placeholder_country_code": {
+		"message": "Bitte wählen...",
+		"description": "Text der angezeigt wird wenn noch kein Land ausgewählt ist"
+	},	
 	"options_description_country_code": {
 		"message": "Wähle hier das Land aus in dem du dich befindest. Wenn du dich in einem anderen Land befindest wie dein Dienstleister, wähle sein Land aus.",
 		"description": "Beschreibung für die Landes Option"

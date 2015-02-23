@@ -79,6 +79,10 @@
 		"message": "Country",
 		"description": "Label for the country option"
 	},
+	"options_placeholder_country_code": {
+		"message": "Please choose...",
+		"description": "Text shown if no country is selected yet"
+	},	
 	"options_description_country_code": {
 		"message": "Choose here in wich country you are living in. If you are located in a different country then your provider, choose his country.",
 		"description": "Description for the country option"

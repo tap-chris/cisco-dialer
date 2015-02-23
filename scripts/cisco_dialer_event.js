@@ -58,12 +58,18 @@ var ciscoDialerEventHandler = new function () {
 
 	this.openConfigTab = function () {
 		if (!this.configTabOpened) {
-			chrome.tabs.create({
-				url: 'chrome-extension://'
+			var optionsUrl = '';
+			if (window.navigator.userAgent.match(/Chrome\/4/)) {
+				optionsUrl = 'chrome://extensions/?options='
+					+ chrome.i18n.getMessage('@@extension_id');
+			}
+			else {
+				optionsUrl = 'chrome-extension://'
 					 + chrome.i18n.getMessage('@@extension_id')
-					 + chrome.runtime.getManifest().options_page,
-				active: true});
-				
+					 + chrome.runtime.getManifest().options_page;
+			}
+			
+			chrome.tabs.create({url: optionsUrl, active: true});
 			this.configTabOpened = true;
 		}
 	}

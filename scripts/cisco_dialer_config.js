@@ -43,7 +43,9 @@ var ciscoDialerConfig = new function () {
     ];
 
 	this.getCountryOptions = function (selected) {
-		var options = selected ? '' : '<option></option>';
+		var options = selected ? '' : '<option>'
+			+ chrome.i18n.getMessage('options_placeholder_country_code')
+			+ '</option>';
 		for (var countryCode in countryCodes) {
 			options += '<option value="' + countryCode 
 				+ '"' + (countryCode == selected ? ' selected' : '') + '>'
@@ -148,9 +150,8 @@ var ciscoDialerConfig = new function () {
         }.bind(this));
     };
 
-    this.onContentLoaded = function () {
+    this.onContentLoaded = function () {		
         this.loadLocale();
-
 		for (var index = 0, size = this.requiredFields.length; index < size; index++) {
 			document.querySelector('#' + this.requiredFields[index]).addEventListener('input', this.changed.bind(this));
 		}

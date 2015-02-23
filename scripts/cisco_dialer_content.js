@@ -19,21 +19,10 @@ var ciscoDialerContentScript = new function () {
     this.listening = false;
 	this.tooltip   = null;
 	this.delay     = 500;
-	this.dontParse = ['head', 'script', 'noscript', 'style', 'input', 'select', 'textarea', 'button', 'code', 'img'];
+	this.dontParse = ['dial', 'head', 'script', 'noscript', 'style', 'input', 'select', 'textarea', 'button', 'code', 'img'];
+	this.modified  = [];
+	this.stop      = [];
 
-	this.checkParsed = function (node) {
-		return (typeof node.className == 'string' ? node.className : '').match(/cisco_parsed/) != null;
-	};
-	
-	this.setParsed = function (node, value) {
-		if (value) {
-			node.className += (node.className ? ' ' : '') + 'cisco_parsed';
-		}
-		else {
-			node.className = node.className.replace(/\s?cisco_parsed/, '');
-		}
-	};
-	
 	this.numberToRegexp = function (number) {
 		return new RegExp(number.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&').replace(/\s+/g, '([\\s\\u00A0]|&[a-z]+;)+'));
 	};
@@ -72,7 +61,6 @@ var ciscoDialerContentScript = new function () {
 			
 			if (parentNode != undefined) {
 				parentNode.innerHTML = parentNode.innerHTML.replace(/<dial[^>]+>([^<]+)<\/dial>/, '$1');
-				this.setParsed(parentNode, false);
 			}
 		}
 	};
@@ -97,8 +85,6 @@ var ciscoDialerContentScript = new function () {
 	};
 		
 	this.replaceNumbers = function (node, phoneNumbers) {
-		this.setParsed(node, true);
-		
 		var nodeContent = node.innerHTML;
 		for (var numberIndex = 0; numberIndex < phoneNumbers.length; numberIndex++) {
 			var phoneNumber = phoneNumbers[numberIndex];
@@ -116,36 +102,44 @@ var ciscoDialerContentScript = new function () {
 		var childNodes = node.childNodes.length;
 		
 		if (this.dontParse.indexOf(nodeName) < 0) {
-			if (!this.checkParsed(node)) {
-				var phoneNumbers = [];
-				for (var nodeIndex = 0; nodeIndex < childNodes; nodeIndex++) {
-					var child = node.childNodes[nodeIndex];
-					
-					if (child.nodeType == Node.TEXT_NODE) {
-						phoneNumbers = phoneNumbers.concat(this.parseTextNode(child));
-					}
-					else {
-						this.parseNode(child);
-					}
-				}
+			var phoneNumbers = [];
+			for (var nodeIndex = 0; nodeIndex < childNodes; nodeIndex++) {
+				var child = node.childNodes[nodeIndex];
 				
-				if (phoneNumbers.length > 0) {
-					this.replaceNumbers(node, phoneNumbers);
+				if (child.nodeType == Node.TEXT_NODE) {
+					phoneNumbers = phoneNumbers.concat(this.parseTextNode(child));
 				}
+				else {
+					this.parseNode(child);
+				}
+			}
+			
+			if (phoneNumbers.length > 0) {
+				this.stop.push(node);
+				this.replaceNumbers(node, phoneNumbers);
 			}
 		}
 	};
 		
 	this.parseNodeAsync = function (node) {
-		if (this.listening) {
+		if (this.listening && (this.modified.indexOf(node) < 0)) {
+			this.modified.push(node);
+			
 			setTimeout(function () {
 				this.parseNode(node);
+				this.modified.splice(this.modified.indexOf(node), 1);
 			}.bind(this), 10);
 		}
 	};
 	
-	this.onNodeChanged = function (nodeChangedEvent) {
-		this.parseNodeAsync(nodeChangedEvent.relatedNode ? nodeChangedEvent.relatedNode : nodeChangedEvent.target);
+	this.onSubtreeModified = function (subtreeModifiedEvent) {
+		var node = subtreeModifiedEvent.target;
+		if (this.stop.indexOf(node) < 0) {
+			this.parseNodeAsync(node);
+		}
+		else {
+			this.stop.splice(this.stop.indexOf(node), 1);
+		}
 	};
 	
     this.onConfigChanged = function (sender) {
@@ -157,95 +151,15 @@ var ciscoDialerContentScript = new function () {
 				this.parseNodeAsync(document.body);
 			}
 			
-			document.addEventListener('DOMNodeInserted', this.onNodeChanged.bind(this), true);
-			document.addEventListener('DOMCharacterDataModified', this.onNodeChanged.bind(this), true);
+			document.addEventListener('DOMSubtreeModified', this.onSubtreeModified.bind(this), true);
         }
 		else if (this.listening && (sender.configOptions.inPageDial == 'false')) {
 			this.listening = false;
+			
+			document.removeEventListener('DOMSubtreeModified', this.onSubtreeModified.bind(this), true);
 			this.removeLinks(document.body);
 		}
     };
 
     ciscoDialer.notifyOnChange(this.onConfigChanged.bind(this));
-}
-
-function ciscoDialerTooltipContainer (parent) {
-	this.timeout = false;
-	this.tooltip = null;
-		
-	this.getOffsetRect = function (element) {
-		var box = element.getBoundingClientRect();
-		var body = document.body;
-		var docElement = document.documentElement;
-		
-		var top  = box.top
-			+ (window.pageYOffset || docElement.scrollTop || body.scrollTop)
-			- (docElement.clientTop || body.clientTop || 0);
-		var left = box.left
-			+ (window.pageXOffset || docElement.scrollLeft || body.scrollLeft)
-			- (docElement.clientLeft || body.clientLeft || 0);
-			
-		return { top: Math.round(top), left: Math.round(left) };
-	};		
-		
-	this.setState = function (state) {
-		this.tooltip.setAttribute('class', 'cisco_tooltip cisco_' + state);
-	};
-		
-	this.reset = function () {
-		if (this.timeout) {
-			clearTimeout(this.timeout);
-			this.timeout = false;
-		}
-	};
-		
-	this.hide = function (delay) {
-		if (typeof delay == 'number') {
-			this.timeout = setTimeout(this.hide.bind(this), delay);
-		}
-		else {
-			this.setState('hidden');
-		}
-	};
-		
-	this.show = function () {
-		this.reset();
-		this.setState('hover');
-	};
-		
-	this.assign = function (target, phoneNumber) {
-		this.reset();
-		
-		var rect = this.getOffsetRect(target);
-		
-		with (this.tooltip) {
-			style.top = (rect.top - 2) + 'px';
-			style.left = (rect.left + target.offsetWidth + 2) + 'px';
-			style.height = (target.offsetHeight) + 'px';
-			style.width = (target.offsetHeight) + 'px';				
-			setAttribute('class', 'cisco_tooltip');
-		}
-		
-		this.tooltip.onclick = function (onClickEvent) {
-			new ciscoDialerPhoneNumber(phoneNumber).dial();
-			this.hide();
-		}.bind(this);
-	};
-
-	this.populate = function (parent) {
-		if (this.tooltip == null) {
-			this.tooltip = document.createElement('div');
-			
-			with (this.tooltip) {
-				setAttribute('class', 'cisco_tooltip cisco_hidden');
-				setAttribute('role', 'tooltip');		
-				onmouseover = this.show.bind(this);
-				onmouseout = this.hide.bind(this);
-			}
-			
-			parent.appendChild(this.tooltip);
-		}
-	};
-	
-	this.populate(parent);
 }

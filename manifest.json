@@ -3,7 +3,8 @@
     "name": "__MSG_extension_name__",
 	"short_name": "Cisco Dialer",
     "description": "__MSG_extension_description__",
-    "version": "1.1.5",
+    "version": "1.1.6",
+	"version_name": "1.1.6 beta",
     "minimum_chrome_version": "28",
     "author": "Christian Volmering <christian@volmering.name>",
     "default_locale": "en",
@@ -16,6 +17,10 @@
 		"keyword": "dial"
 	},
     "options_page": "/pages/cisco_dialer_config.htm",
+	"options_ui": {
+		"page": "/pages/cisco_dialer_config.htm",
+		"chrome_style": false
+	},
     "permissions": [
         "storage",
         "notifications",
@@ -44,7 +49,7 @@
 				"/scripts/cisco_dialer_contacts.js"
 			],
 			"css": [
-				"/styles/cisco_dialer_content.css"
+				"/styles/cisco_dialer_contacts.css"
 			],
 			"run_at": "document_idle",
 			"all_frames": true
@@ -58,10 +63,11 @@
 				"/scripts/cisco_dialer_sjcl.js",
 				"/scripts/cisco_dialer_phone.js",
 				"/scripts/cisco_dialer_classes.js",
+				"/scripts/cisco_dialer_tooltip.js",
 				"/scripts/cisco_dialer_content.js"
 			],
 			"css": [
-				"/styles/cisco_dialer_content.css"
+				"/styles/cisco_dialer_tooltip.css"
 			],
 			"run_at": "document_idle",
 			"all_frames": true
