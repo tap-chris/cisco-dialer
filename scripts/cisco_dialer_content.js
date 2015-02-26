@@ -15,16 +15,21 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 var ciscoDialerContentScript = new function () {
     this.listening = false;
 	this.tooltip   = null;
 	this.delay     = 500;
-	this.dontParse = ['dial', 'head', 'script', 'noscript', 'style', 'input', 'select', 'textarea', 'button', 'code', 'img'];
 	this.modified  = [];
 	this.stop      = [];
+	this.dontParse = [
+		'dial', 'head', 'script', 'noscript', 'style', 'input', 'select',
+		'textarea', 'button', 'code', 'img'
+	];
 
 	this.numberToRegexp = function (number) {
-		return new RegExp(number.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&').replace(/\s+/g, '([\\s\\u00A0]|&[a-z]+;)+'));
+		return new RegExp(number.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&').replace(
+			/\s+/g, '([\\s\\u00A0]|&[a-z]+;)+'), 'g');
 	};
 
 	this.isDate = function (text) {
@@ -32,7 +37,8 @@ var ciscoDialerContentScript = new function () {
 		var dateBigEndian  = '([0-9]{2,4}([\/\.\-][0-9]{1,2}){2,})';
 		var dateTime       = '(([0-9]{2,4}\s+)?[0-9]{1,2}:[0-9]{1,2})';
 		
-		return text.match(new RegExp('/' + dateLiMiEndian + '|' + dateBigEndian + '|' + dateTime + '/')) != null;
+		return text.match(new RegExp(
+			'/' + dateLiMiEndian + '|' + dateBigEndian + '|' + dateTime + '/')) != null;
 	};
 
 	this.updateDialLinks = function (rootNode) {
@@ -51,7 +57,7 @@ var ciscoDialerContentScript = new function () {
 			}.bind(this);
 		}
 	};
-	
+
 	this.removeLinks = function (rootNode) {
 		var links = rootNode.getElementsByTagName('dial');
 		var linkCount = links.length;
@@ -60,22 +66,24 @@ var ciscoDialerContentScript = new function () {
 			var parentNode = links[linkIndex].parentNode;
 			
 			if (parentNode != undefined) {
-				parentNode.innerHTML = parentNode.innerHTML.replace(/<dial[^>]+>([^<]+)<\/dial>/, '$1');
+				parentNode.innerHTML = parentNode.innerHTML.replace(
+					/<dial[^>]+>([^<]+)<\/dial>/g, '$1');
 			}
 		}
 	};
-	
-	this.parseTextNode = function (node) {
-		var result = [];
-		
+
+	this.parseTextNode = function (node, result) {
 		if (node.nodeValue.trim() != '') {
-			var numbers = node.nodeValue.match(/(\+?[0-9\(\[][0-9:\.\-\(\)\[\]\{\}\/\s\u00A0]+[0-9\)\]])/g);
+			var numbers = node.nodeValue.match(
+				/(\+?[0-9\(\[][0-9:\.\-\(\)\[\]\{\}\/\s\u00A0]+[0-9\)\]])/g);
 			var numberCount = numbers != null ? numbers.length : 0;
 			
 			for (var index = 0; index < numberCount; index++) {
-				var phoneNumber = numbers[index].trim();
+				var phoneNumber = new ciscoDialerPhoneNumber(
+					numbers[index].trim(), ciscoDialer.configOptions.countryCode);
 				
-				if (!this.isDate(phoneNumber) && isValidNumber(phoneNumber, ciscoDialer.configOptions.countryCode)) {
+				if ((phoneNumber.indexIn(result) < 0)
+					&& !this.isDate(phoneNumber.toString()) && phoneNumber.valid()) {
 					result.push(phoneNumber);
 				}
 			}
@@ -83,20 +91,20 @@ var ciscoDialerContentScript = new function () {
 		
 		return result;
 	};
-		
+
 	this.replaceNumbers = function (node, phoneNumbers) {
 		var nodeContent = node.innerHTML;
 		for (var numberIndex = 0; numberIndex < phoneNumbers.length; numberIndex++) {
 			var phoneNumber = phoneNumbers[numberIndex];
 			
-			nodeContent = nodeContent.replace(this.numberToRegexp(phoneNumber),
-				'<dial number="' + phoneNumber + '">$&</dial>');
+			nodeContent = nodeContent.replace(this.numberToRegexp(phoneNumber.rawNumber()),
+				'<dial number="' + phoneNumber.clean().toString() + '">$&</dial>');
 		}
 		
 		node.innerHTML = nodeContent;
 		this.updateDialLinks(node);
 	};
-	
+
 	this.parseNode = function (node) {
 		var nodeName = node.nodeName.toLowerCase();
 		var childNodes = node.childNodes.length;
@@ -107,7 +115,7 @@ var ciscoDialerContentScript = new function () {
 				var child = node.childNodes[nodeIndex];
 				
 				if (child.nodeType == Node.TEXT_NODE) {
-					phoneNumbers = phoneNumbers.concat(this.parseTextNode(child));
+					phoneNumbers = this.parseTextNode(child, phoneNumbers);
 				}
 				else {
 					this.parseNode(child);
@@ -120,7 +128,7 @@ var ciscoDialerContentScript = new function () {
 			}
 		}
 	};
-		
+
 	this.parseNodeAsync = function (node) {
 		if (this.listening && (this.modified.indexOf(node) < 0)) {
 			this.modified.push(node);
@@ -131,7 +139,7 @@ var ciscoDialerContentScript = new function () {
 			}.bind(this), 10);
 		}
 	};
-	
+
 	this.onSubtreeModified = function (subtreeModifiedEvent) {
 		var node = subtreeModifiedEvent.target;
 		if (this.stop.indexOf(node) < 0) {
@@ -141,9 +149,10 @@ var ciscoDialerContentScript = new function () {
 			this.stop.splice(this.stop.indexOf(node), 1);
 		}
 	};
-	
-    this.onConfigChanged = function (sender) {
-        if (!this.listening && sender.canDial() && (sender.configOptions.inPageDial == 'true')) {
+
+	this.onConfigChanged = function (sender) {
+		if (!this.listening && sender.canDial()
+			&& (sender.configOptions.inPageDial == 'true')) {
 			this.listening = true;
 			
 			if (document.body != undefined) {
@@ -151,15 +160,17 @@ var ciscoDialerContentScript = new function () {
 				this.parseNodeAsync(document.body);
 			}
 			
-			document.addEventListener('DOMSubtreeModified', this.onSubtreeModified.bind(this), true);
-        }
+			document.addEventListener('DOMSubtreeModified',
+				this.onSubtreeModified.bind(this), true);
+		}
 		else if (this.listening && (sender.configOptions.inPageDial == 'false')) {
 			this.listening = false;
 			
-			document.removeEventListener('DOMSubtreeModified', this.onSubtreeModified.bind(this), true);
+			document.removeEventListener('DOMSubtreeModified',
+				this.onSubtreeModified.bind(this), true);
 			this.removeLinks(document.body);
 		}
-    };
+	};
 
-    ciscoDialer.notifyOnChange(this.onConfigChanged.bind(this));
+	ciscoDialer.notifyOnChange(this.onConfigChanged.bind(this));
 }

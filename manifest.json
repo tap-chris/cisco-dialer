@@ -1,41 +1,34 @@
 {
-    "manifest_version": 2,
-    "name": "__MSG_extension_name__",
+	"manifest_version": 2,
+	"name": "__MSG_extension_name__",
 	"short_name": "Cisco Dialer",
-    "description": "__MSG_extension_description__",
-    "version": "1.1.6",
-	"version_name": "1.1.6 beta",
-    "minimum_chrome_version": "28",
-    "author": "Christian Volmering <christian@volmering.name>",
-    "default_locale": "en",
-    "icons": {
-		"16": "/images/extension_icon_16.png",
-        "48": "/images/extension_icon_48.png",
-        "128": "/images/extension_icon_128.png"
-    },
+	"description": "__MSG_extension_description__",
+	"version": "1.1.7",
+	"version_name": "1.1.7 beta",
+	"minimum_chrome_version": "28",
+	"author": "Christian Volmering <christian@volmering.name>",
+	"default_locale": "en",
+	"icons": {
+		"16": "/images/cisco_dialer_icon_16px.png",
+		"48": "/images/cisco_dialer_icon_48px.png",
+		"128": "/images/cisco_dialer_icon_128px.png"
+	},
 	"omnibox": {
 		"keyword": "dial"
 	},
-    "options_page": "/pages/cisco_dialer_config.htm",
+	"options_page": "/pages/cisco_dialer_config.htm",
 	"options_ui": {
 		"page": "/pages/cisco_dialer_config.htm",
 		"chrome_style": false
 	},
-    "permissions": [
-        "storage",
-        "notifications",
-        "contextMenus",
-        "http://*/",
-		"https://*/",
-        "*://mail.google.com/*",
-        "*://www.google.com/contacts/*",
-        "*://www.google.de/contacts/*"
-    ],
-    "optional_permissions": [
-        "http://*/",
+	"permissions": [
+		"storage",
+		"notifications",
+		"contextMenus",
+		"http://*/",
 		"https://*/"
-    ],
-    "content_scripts": [
+	],
+	"content_scripts": [
 		{
 			"matches": [
 				"*://mail.google.com/*",
@@ -73,17 +66,17 @@
 			"all_frames": true
 		}
 	],
-    "background": {
-        "scripts": [
-            "/scripts/cisco_dialer_sjcl.js",
+	"background": {
+		"scripts": [
+			"/scripts/cisco_dialer_sjcl.js",
 			"/scripts/cisco_dialer_phone.js",
-            "/scripts/cisco_dialer_classes.js",
-            "/scripts/cisco_dialer_event.js"
-        ],
-        "persistent": false
-    },
-    "web_accessible_resources": [
-        "/images/dial_icon.png",
-		"/images/extension_icon_128.png"
-    ]
+			"/scripts/cisco_dialer_classes.js",
+			"/scripts/cisco_dialer_event.js"
+		],
+		"persistent": false
+	},
+	"web_accessible_resources": [
+		"/images/cisco_dialer_icon_dial.png",
+		"/images/cisco_dialer_icon_128px.png"
+	]
 }

@@ -15,10 +15,11 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 function ciscoDialerTooltipContainer (parent) {
 	this.timeout = false;
 	this.tooltip = null;
-		
+
 	this.getOffsetRect = function (element) {
 		var box = element.getBoundingClientRect();
 		var body = document.body;
@@ -32,19 +33,19 @@ function ciscoDialerTooltipContainer (parent) {
 			- (docElement.clientLeft || body.clientLeft || 0);
 			
 		return { top: Math.round(top), left: Math.round(left) };
-	};		
-		
+	};
+
 	this.setState = function (state) {
 		this.tooltip.setAttribute('class', 'cisco_tooltip cisco_' + state);
 	};
-		
+
 	this.reset = function () {
 		if (this.timeout) {
 			clearTimeout(this.timeout);
 			this.timeout = false;
 		}
 	};
-		
+
 	this.hide = function (delay) {
 		if (typeof delay == 'number') {
 			this.timeout = setTimeout(this.hide.bind(this), delay);
@@ -53,12 +54,12 @@ function ciscoDialerTooltipContainer (parent) {
 			this.setState('hidden');
 		}
 	};
-		
+
 	this.show = function () {
 		this.reset();
 		this.setState('hover');
 	};
-		
+
 	this.assign = function (target, phoneNumber) {
 		this.reset();
 		
@@ -68,7 +69,7 @@ function ciscoDialerTooltipContainer (parent) {
 			style.top = (rect.top - 2) + 'px';
 			style.left = (rect.left + target.offsetWidth + 2) + 'px';
 			style.height = (target.offsetHeight) + 'px';
-			style.width = (target.offsetHeight) + 'px';				
+			style.width = (target.offsetHeight) + 'px';
 			setAttribute('class', 'cisco_tooltip');
 		}
 		
@@ -84,7 +85,7 @@ function ciscoDialerTooltipContainer (parent) {
 			
 			with (this.tooltip) {
 				setAttribute('class', 'cisco_tooltip cisco_hidden');
-				setAttribute('role', 'tooltip');		
+				setAttribute('role', 'tooltip');
 				onmouseover = this.show.bind(this);
 				onmouseout = this.hide.bind(this);
 			}
@@ -92,6 +93,6 @@ function ciscoDialerTooltipContainer (parent) {
 			parent.appendChild(this.tooltip);
 		}
 	};
-	
+
 	this.populate(parent);
 }

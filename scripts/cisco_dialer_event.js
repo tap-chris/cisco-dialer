@@ -15,37 +15,42 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 var ciscoDialerEventHandler = new function () {
-    this.contextMenuInstalled = false;
-	this.omniBoxInstalled = false;
-	this.configTabOpened = false;
+	this.contextMenuInstalled = false;
+	this.omniBoxInstalled     = false;
+	this.configTabOpened      = false;
 
-    this.onContextMenuClick = function (info, tab) {
-        new ciscoDialerPhoneNumber(info.selectionText).dial();
-    };
+	this.onContextMenuClick = function (info, tab) {
+		new ciscoDialerPhoneNumber(info.selectionText).dial();
+	};
 
-    this.installContextMenu = function () {
-        if ((ciscoDialer.configOptions.contextMenu == 'true') && !this.contextMenuInstalled) {
-            chrome.contextMenus.create({
-                'title': chrome.i18n.getMessage('dial_label', '%s'),
-                'contexts': ['selection'],
-                'id': chrome.i18n.getMessage('@@extension_id')
-            });
-
-            chrome.contextMenus.onClicked.addListener(this.onContextMenuClick.bind(this));
-            this.contextMenuInstalled = true;
-        }
-		else if ((ciscoDialer.configOptions.contextMenu == 'false') && this.contextMenuInstalled) {
+	this.installContextMenu = function () {
+		if ((ciscoDialer.configOptions.contextMenu == 'true')
+			&& !this.contextMenuInstalled) {
+			chrome.contextMenus.create({
+				'title': chrome.i18n.getMessage('dial_label', '%s'),
+				'contexts': ['selection'],
+				'id': chrome.i18n.getMessage('@@extension_id')
+			});
+			
+			chrome.contextMenus.onClicked.addListener(
+				this.onContextMenuClick.bind(this));
+			this.contextMenuInstalled = true;
+		}
+		else if ((ciscoDialer.configOptions.contextMenu == 'false')
+			&& this.contextMenuInstalled) {
 			this.contextMenuInstalled = false;
 			chrome.contextMenus.remove(chrome.i18n.getMessage('@@extension_id'));
 		}
-    };
-	
+	};
+
 	this.installOmniBox = function () {
 		if (!this.omniBoxInstalled) {
 			chrome.omnibox.onInputChanged.addListener(function(text, suggest) {
 				chrome.omnibox.setDefaultSuggestion({
-					description: chrome.i18n.getMessage('dial_label', text ? text : '...')});
+					description: chrome.i18n.getMessage(
+						'dial_label', text ? text : '...')});
 			});
 			
 			chrome.omnibox.onInputEntered.addListener(function(text) {
@@ -74,22 +79,22 @@ var ciscoDialerEventHandler = new function () {
 		}
 	}
 
-    this.onInstalled = function () {
-		this.onConfigChanged(this);		
+	this.onInstalled = function () {
+		this.onConfigChanged(this);
 	};
 
-    this.onConfigChanged = function (sender) {
-        if (ciscoDialer.canDial()) {
-            this.installContextMenu();
+	this.onConfigChanged = function (sender) {
+		if (ciscoDialer.canDial()) {
+			this.installContextMenu();
 			this.installOmniBox();
-        }
+		}
 		else if (ciscoDialer.loaded) {
 			this.openConfigTab();
 		}
-    };
+	};
 
-    ciscoDialer.processEvents();
-    ciscoDialer.notifyOnChange(this.onConfigChanged.bind(this));
+	ciscoDialer.processEvents();
+	ciscoDialer.notifyOnChange(this.onConfigChanged.bind(this));
 
-    chrome.runtime.onInstalled.addListener(this.onInstalled.bind(this));
+	chrome.runtime.onInstalled.addListener(this.onInstalled.bind(this));
 }

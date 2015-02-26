@@ -1,5 +1,7 @@
 /*
- Copyright (C) Alan Beebe (alan.beebe@gmail.com).
+ Protocol Buffer 2 Copyright 2008 Google Inc.
+ All other code copyright its respective owners.
+ Copyright (C) 2010 The Libphonenumber Authors
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,33 +15,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 */
-var countryCodes=new Array;countryCodes["AF"]="Afghanistan";countryCodes["AL"]="Albania";countryCodes["DZ"]="Algeria";countryCodes["AS"]="American Samoa";countryCodes["AD"]="Andorra";countryCodes["AO"]="Angola";countryCodes["AI"]="Anguilla";countryCodes["AQ"]="Antarctica";countryCodes["AG"]="Antigua And Barbuda";countryCodes["AR"]="Argentina";countryCodes["AM"]="Armenia";countryCodes["AW"]="Aruba";countryCodes["AC"]="Ascension Island";countryCodes["AU"]="Australia";countryCodes["AT"]="Austria";
-countryCodes["AZ"]="Azerbaijan";countryCodes["BS"]="Bahamas";countryCodes["BH"]="Bahrain";countryCodes["BD"]="Bangladesh";countryCodes["BB"]="Barbados";countryCodes["BY"]="Belarus";countryCodes["BE"]="Belgium";countryCodes["BZ"]="Belize";countryCodes["BJ"]="Benin";countryCodes["BM"]="Bermuda";countryCodes["BT"]="Bhutan";countryCodes["BO"]="Bolivia";countryCodes["BA"]="Bosnia And Herzegovina";countryCodes["BW"]="Botswana";countryCodes["BV"]="Bouvet Island";countryCodes["BR"]="Brazil";countryCodes["IO"]="British Indian Ocean Territory";
-countryCodes["BN"]="Brunei";countryCodes["BG"]="Bulgaria";countryCodes["BF"]="Burkina Faso";countryCodes["BI"]="Burundi";countryCodes["KH"]="Cambodia";countryCodes["CM"]="Cameroon";countryCodes["CA"]="Canada";countryCodes["CV"]="Cape Verde";countryCodes["KY"]="Cayman Islands";countryCodes["CF"]="Central African Republic";countryCodes["TD"]="Chad";countryCodes["CL"]="Chile";countryCodes["CN"]="China";countryCodes["CX"]="Christmas Island";countryCodes["CC"]="Cocos (Keeling) Islands";countryCodes["CO"]="Columbia";countryCodes["KM"]=
-"Comoros";countryCodes["CG"]="Congo";countryCodes["CK"]="Cook Islands";countryCodes["CR"]="Costa Rica";countryCodes["CI"]="Cote D'Ivorie (Ivory Coast)";countryCodes["HR"]="Croatia (Hrvatska)";countryCodes["CU"]="Cuba";countryCodes["CY"]="Cyprus";countryCodes["CZ"]="Czech Republic";countryCodes["CD"]="Democratic Republic Of Congo (Zaire)";countryCodes["DK"]="Denmark";countryCodes["DJ"]="Djibouti";countryCodes["DM"]="Dominica";countryCodes["DO"]="Dominican Republic";countryCodes["TL"]="East Timor";countryCodes["EC"]="Ecuador";countryCodes["EG"]=
-"Egypt";countryCodes["SV"]="El Salvador";countryCodes["GQ"]="Equatorial Guinea";countryCodes["ER"]="Eritrea";countryCodes["EE"]="Estonia";countryCodes["ET"]="Ethiopia";countryCodes["FK"]="Falkland Islands (Malvinas)";countryCodes["FO"]="Faroe Islands";countryCodes["FJ"]="Fiji";countryCodes["FI"]="Finland";countryCodes["FR"]="France";countryCodes["FX"]="France, Metropolitan";countryCodes["GF"]="French Guinea";countryCodes["PF"]="French Polynesia";countryCodes["TF"]="French Southern Territories";countryCodes["GA"]="Gabon";countryCodes["GM"]=
-"Gambia";countryCodes["GE"]="Georgia";countryCodes["DE"]="Germany";countryCodes["GH"]="Ghana";countryCodes["GI"]="Gibraltar";countryCodes["GR"]="Greece";countryCodes["GL"]="Greenland";countryCodes["GD"]="Grenada";countryCodes["GP"]="Guadeloupe";countryCodes["GU"]="Guam";countryCodes["GT"]="Guatemala";countryCodes["GN"]="Guinea";countryCodes["GW"]="Guinea-Bissau";countryCodes["GY"]="Guyana";countryCodes["HT"]="Haiti";countryCodes["HM"]="Heard And McDonald Islands";countryCodes["HN"]="Honduras";countryCodes["HK"]="Hong Kong";countryCodes["HU"]=
-"Hungary";countryCodes["IS"]="Iceland";countryCodes["IN"]="India";countryCodes["ID"]="Indonesia";countryCodes["IR"]="Iran";countryCodes["IQ"]="Iraq";countryCodes["IE"]="Ireland";countryCodes["IM"]="Isle of Man";countryCodes["IL"]="Israel";countryCodes["IT"]="Italy";countryCodes["JM"]="Jamaica";countryCodes["JP"]="Japan";countryCodes["JO"]="Jordan";countryCodes["KZ"]="Kazakhstan";countryCodes["KE"]="Kenya";countryCodes["KI"]="Kiribati";countryCodes["KW"]="Kuwait";countryCodes["KG"]="Kyrgyzstan";countryCodes["LA"]="Laos";countryCodes["LV"]=
-"Latvia";countryCodes["LB"]="Lebanon";countryCodes["LS"]="Lesotho";countryCodes["LR"]="Liberia";countryCodes["LY"]="Libya";countryCodes["LI"]="Liechtenstein";countryCodes["LT"]="Lithuania";countryCodes["LU"]="Luxembourg";countryCodes["MO"]="Macau";countryCodes["MK"]="Macedonia";countryCodes["MG"]="Madagascar";countryCodes["MW"]="Malawi";countryCodes["MY"]="Malaysia";countryCodes["MV"]="Maldives";countryCodes["ML"]="Mali";countryCodes["MT"]="Malta";countryCodes["MH"]="Marshall Islands";countryCodes["MQ"]="Martinique";countryCodes["MR"]=
-"Mauritania";countryCodes["MU"]="Mauritius";countryCodes["YT"]="Mayotte";countryCodes["MX"]="Mexico";countryCodes["FM"]="Micronesia";countryCodes["MD"]="Moldova";countryCodes["MC"]="Monaco";countryCodes["MN"]="Mongolia";countryCodes["ME"]="Montenegro";countryCodes["MS"]="Montserrat";countryCodes["MA"]="Morocco";countryCodes["MZ"]="Mozambique";countryCodes["MM"]="Myanmar (Burma)";countryCodes["NA"]="Namibia";countryCodes["NR"]="Nauru";countryCodes["NP"]="Nepal";countryCodes["NL"]="Netherlands";countryCodes["AN"]="Netherlands Antilles";
-countryCodes["NC"]="New Caledonia";countryCodes["NZ"]="New Zealand";countryCodes["NI"]="Nicaragua";countryCodes["NE"]="Niger";countryCodes["NG"]="Nigeria";countryCodes["NU"]="Niue";countryCodes["NF"]="Norfolk Island";countryCodes["KP"]="North Korea";countryCodes["MP"]="Northern Mariana Islands";countryCodes["NO"]="Norway";countryCodes["OM"]="Oman";countryCodes["PK"]="Pakistan";countryCodes["PW"]="Palau";countryCodes["PS"]="Palestine";countryCodes["PA"]="Panama";countryCodes["PG"]="Papua New Guinea";countryCodes["PY"]="Paraguay";countryCodes["PE"]=
-"Peru";countryCodes["PH"]="Philippines";countryCodes["PN"]="Pitcairn";countryCodes["PL"]="Poland";countryCodes["PT"]="Portugal";countryCodes["PR"]="Puerto Rico";countryCodes["QA"]="Qatar";countryCodes["RE"]="Reunion";countryCodes["RO"]="Romania";countryCodes["RU"]="Russia";countryCodes["RW"]="Rwanda";countryCodes["SH"]="Saint Helena";countryCodes["KN"]="Saint Kitts And Nevis";countryCodes["LC"]="Saint Lucia";countryCodes["PM"]="Saint Pierre And Miquelon";countryCodes["VC"]="Saint Vincent And The Grenadines";countryCodes["SM"]="San Marino";
-countryCodes["ST"]="Sao Tome And Principe";countryCodes["SA"]="Saudi Arabia";countryCodes["SN"]="Senegal";countryCodes["RS"]="Serbia";countryCodes["SC"]="Seychelles";countryCodes["SL"]="Sierra Leone";countryCodes["SG"]="Singapore";countryCodes["SK"]="Slovak Republic";countryCodes["SI"]="Slovenia";countryCodes["SB"]="Solomon Islands";countryCodes["SO"]="Somalia";countryCodes["ZA"]="South Africa";countryCodes["GS"]="South Georgia And South Sandwich Islands";countryCodes["KR"]="South Korea";countryCodes["ES"]="Spain";countryCodes["LK"]=
-"Sri Lanka";countryCodes["SD"]="Sudan";countryCodes["SR"]="Suriname";countryCodes["SJ"]="Svalbard And Jan Mayen";countryCodes["SZ"]="Swaziland";countryCodes["SE"]="Sweden";countryCodes["CH"]="Switzerland";countryCodes["SY"]="Syria";countryCodes["TW"]="Taiwan";countryCodes["TJ"]="Tajikistan";countryCodes["TZ"]="Tanzania";countryCodes["TH"]="Thailand";countryCodes["TG"]="Togo";countryCodes["TK"]="Tokelau";countryCodes["TO"]="Tonga";countryCodes["TT"]="Trinidad And Tobago";countryCodes["TN"]="Tunisia";countryCodes["TR"]="Turkey";countryCodes["TM"]=
-"Turkmenistan";countryCodes["TC"]="Turks And Caicos Islands";countryCodes["TV"]="Tuvalu";countryCodes["UG"]="Uganda";countryCodes["UA"]="Ukraine";countryCodes["AE"]="United Arab Emirates";countryCodes["GB"]="United Kingdom";countryCodes["US"]="United States";countryCodes["UM"]="United States Minor Outlying Islands";countryCodes["UY"]="Uruguay";countryCodes["UZ"]="Uzbekistan";countryCodes["VU"]="Vanuatu";countryCodes["VA"]="Vatican City (Holy See)";countryCodes["VE"]="Venezuela";countryCodes["VN"]="Vietnam";countryCodes["VG"]=
-"Virgin Islands (British)";countryCodes["VI"]="Virgin Islands (US)";countryCodes["WF"]="Wallis And Futuna Islands";countryCodes["EH"]="Western Sahara";countryCodes["WS"]="Western Samoa";countryCodes["YE"]="Yemen";countryCodes["YU"]="Yugoslavia";countryCodes["ZM"]="Zambia";countryCodes["ZW"]="Zimbabwe";
-function countryForE164Number(phone){try{var phone=cleanPhone(phone);var phoneUtil=i18n.phonenumbers.PhoneNumberUtil.getInstance();var number=phoneUtil.parseAndKeepRawInput(phone);var output=new goog.string.StringBuffer;output=phoneUtil.getRegionCodeForNumber(number);return output.toString()}catch(e){return""}}
-function formatNumberForMobileDialing(country,phone){try{var phone=cleanPhone(phone);var phoneUtil=i18n.phonenumbers.PhoneNumberUtil.getInstance();var number=phoneUtil.parseAndKeepRawInput(phone,country);var output=new goog.string.StringBuffer;output=phoneUtil.formatNumberForMobileDialing(number,country,true);return output.toString()}catch(e){return""}}
-function isValidNumber(phone,country){try{var phone=cleanPhone(phone);var phoneUtil=i18n.phonenumbers.PhoneNumberUtil.getInstance();var number=phoneUtil.parseAndKeepRawInput(phone,country);return phoneUtil.isValidNumber(number)}catch(e){return false}}
-function formatE164(country,phone){try{var phone=cleanPhone(phone);var phoneUtil=i18n.phonenumbers.PhoneNumberUtil.getInstance();var number=phoneUtil.parseAndKeepRawInput(phone,country);var PNF=i18n.phonenumbers.PhoneNumberFormat;var output=new goog.string.StringBuffer;output=phoneUtil.format(number,PNF.E164);return output.toString()}catch(e){return phone}}
-function formatInternational(country,phone){try{var phone=cleanPhone(phone);var formatter=new i18n.phonenumbers.AsYouTypeFormatter(country);var output=new goog.string.StringBuffer;for(var i=0;i<phone.length;++i){var inputChar=phone.charAt(i);output=formatter.inputDigit(inputChar)}return output.toString()}catch(e){return phone}}
-function formatLocal(country,phone){try{var phone=cleanPhone(phone);var phoneUtil=i18n.phonenumbers.PhoneNumberUtil.getInstance();var number=phoneUtil.parseAndKeepRawInput(phone,country);if(phoneUtil.isValidNumberForRegion(number,country)){var PNF=i18n.phonenumbers.PhoneNumberFormat;var output=new goog.string.StringBuffer;output=phoneUtil.format(number,PNF.NATIONAL);return output.toString()}else return formatInternational(country,phone)}catch(e){return formatInternational(country,phone)}}
-function exampleLandlineNumber(country){try{var phoneUtil=i18n.phonenumbers.PhoneNumberUtil.getInstance();var output=phoneUtil.getExampleNumber(country);return""+output.getNationalNumber()}catch(e){return""}}function exampleMobileNumber(country){try{var phoneUtil=i18n.phonenumbers.PhoneNumberUtil.getInstance();var output=phoneUtil.getExampleNumberForType(country,i18n.phonenumbers.PhoneNumberType.MOBILE);return""+output.getNationalNumber()}catch(e){return""}}
-function cleanPhone(phone){phone=phone.replace(/[^\d\+]/g,"");if(phone.substr(0,1)=="+")phone="+"+phone.replace(/[^\d]/g,"");else phone=phone.replace(/[^\d]/g,"");return phone}
-function countryCodeToName(countryCode){var name=countryCodes[countryCode.toUpperCase()];if(name===undefined)return"";else return name};
-function formatCisco(country,phone){try{var phone=cleanPhone(phone);var phoneUtil=i18n.phonenumbers.PhoneNumberUtil.getInstance();var number=phoneUtil.parseAndKeepRawInput(phone,country);if(phoneUtil.isValidNumberForRegion(number,country)){var PNF=i18n.phonenumbers.PhoneNumberFormat;var output=new goog.string.StringBuffer;output=phoneUtil.format(number,PNF.NATIONAL);return output.toString()}else return phoneUtil.formatOutOfCountryCallingNumber(number,country).toString()}catch(e){return phoneUtil.formatOutOfCountryCallingNumber(number,country).toString()}}
-
-
 var COMPILED=!0,goog=goog||{};goog.global=this;goog.exportPath_=function(a,b,c){a=a.split(".");c=c||goog.global;a[0]in c||!c.execScript||c.execScript("var "+a[0]);for(var d;a.length&&(d=a.shift());)a.length||void 0===b?c=c[d]?c[d]:c[d]={}:c[d]=b};
 goog.define=function(a,b){var c=b;COMPILED||(goog.global.CLOSURE_UNCOMPILED_DEFINES&&Object.prototype.hasOwnProperty.call(goog.global.CLOSURE_UNCOMPILED_DEFINES,a)?c=goog.global.CLOSURE_UNCOMPILED_DEFINES[a]:goog.global.CLOSURE_DEFINES&&Object.prototype.hasOwnProperty.call(goog.global.CLOSURE_DEFINES,a)&&(c=goog.global.CLOSURE_DEFINES[a]));goog.exportPath_(a,c)};goog.DEBUG=!0;goog.LOCALE="en";goog.TRUSTED_SITE=!0;goog.STRICT_MODE_COMPATIBLE=!1;
 goog.provide=function(a){if(!COMPILED){if(goog.isProvided_(a))throw Error('Namespace "'+a+'" already declared.');delete goog.implicitNamespaces_[a];for(var b=a;(b=b.substring(0,b.lastIndexOf(".")))&&!goog.getObjectByName(b);)goog.implicitNamespaces_[b]=!0}goog.exportPath_(a)};goog.setTestOnly=function(a){if(COMPILED&&!goog.DEBUG)throw a=a||"",Error("Importing test-only code into non-debug environment"+a?": "+a:".");};goog.forwardDeclare=function(a){};
@@ -253,40 +228,9 @@ goog.json.Serializer.prototype.serializeArray=function(a,b){var c=a.length;b.pus
 goog.json.Serializer.prototype.serializeObject_=function(a,b){b.push("{");var c="",d;for(d in a)if(Object.prototype.hasOwnProperty.call(a,d)){var e=a[d];"function"!=typeof e&&(b.push(c),this.serializeString_(d,b),b.push(":"),this.serializeInternal(this.replacer_?this.replacer_.call(a,d,e):e,b),c=",")}b.push("}")};goog.proto2.ObjectSerializer=function(a){this.keyOption_=a};goog.inherits(goog.proto2.ObjectSerializer,goog.proto2.Serializer);goog.proto2.ObjectSerializer.KeyOption={TAG:0,NAME:1};
 goog.proto2.ObjectSerializer.prototype.serialize=function(a){for(var b=a.getDescriptor().getFields(),c={},d=0;d<b.length;d++){var e=b[d],f=this.keyOption_==goog.proto2.ObjectSerializer.KeyOption.NAME?e.getName():e.getTag();if(a.has(e))if(e.isRepeated()){var g=[];c[f]=g;for(f=0;f<a.countOf(e);f++)g.push(this.getSerializedValue(e,a.get(e,f)))}else c[f]=this.getSerializedValue(e,a.get(e))}a.forEachUnknown(function(a,b){c[a]=b});return c};
 goog.proto2.ObjectSerializer.prototype.deserializeTo=function(a,b){var c=a.getDescriptor(),d;for(d in b){var e,f=b[d],g=goog.string.isNumeric(d);g?e=c.findFieldByTag(d):(goog.asserts.assert(this.keyOption_==goog.proto2.ObjectSerializer.KeyOption.NAME),e=c.findFieldByName(d));if(e)if(e.isRepeated())for(goog.asserts.assert(goog.isArray(f)),g=0;g<f.length;g++)a.add(e,this.getDeserializedValue(e,f[g]));else goog.asserts.assert(!goog.isArray(f)),a.set(e,this.getDeserializedValue(e,f));else g?a.setUnknown(Number(d),
-f):goog.asserts.assert(e)}};/*
+f):goog.asserts.assert(e)}};
 
- Copyright (C) 2011 The Libphonenumber Authors.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
-var i18n={phonenumbers:{}};i18n.phonenumbers.RegionCode={UN001:"001",AD:"AD",AE:"AE",AO:"AO",AQ:"AQ",AR:"AR",AU:"AU",BB:"BB",BR:"BR",BS:"BS",BY:"BY",CA:"CA",CH:"CH",CN:"CN",CS:"CS",CX:"CX",DE:"DE",GB:"GB",HU:"HU",IT:"IT",JP:"JP",KR:"KR",MX:"MX",NZ:"NZ",PL:"PL",RE:"RE",SE:"SE",SG:"SG",US:"US",YT:"YT",ZW:"ZW",ZZ:"ZZ"};/*
-
- Protocol Buffer 2 Copyright 2008 Google Inc.
- All other code copyright its respective owners.
- Copyright (C) 2010 The Libphonenumber Authors
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+var i18n={phonenumbers:{}};i18n.phonenumbers.RegionCode={UN001:"001",AD:"AD",AE:"AE",AO:"AO",AQ:"AQ",AR:"AR",AU:"AU",BB:"BB",BR:"BR",BS:"BS",BY:"BY",CA:"CA",CH:"CH",CN:"CN",CS:"CS",CX:"CX",DE:"DE",GB:"GB",HU:"HU",IT:"IT",JP:"JP",KR:"KR",MX:"MX",NZ:"NZ",PL:"PL",RE:"RE",SE:"SE",SG:"SG",US:"US",YT:"YT",ZW:"ZW",ZZ:"ZZ"};
 i18n.phonenumbers.NumberFormat=function(){goog.proto2.Message.apply(this)};goog.inherits(i18n.phonenumbers.NumberFormat,goog.proto2.Message);i18n.phonenumbers.NumberFormat.prototype.getPattern=function(){return this.get$Value(1)};i18n.phonenumbers.NumberFormat.prototype.getPatternOrDefault=function(){return this.get$ValueOrDefault(1)};i18n.phonenumbers.NumberFormat.prototype.setPattern=function(a){this.set$Value(1,a)};i18n.phonenumbers.NumberFormat.prototype.hasPattern=function(){return this.has$Value(1)};
 i18n.phonenumbers.NumberFormat.prototype.patternCount=function(){return this.count$Values(1)};i18n.phonenumbers.NumberFormat.prototype.clearPattern=function(){this.clear$Field(1)};i18n.phonenumbers.NumberFormat.prototype.getFormat=function(){return this.get$Value(2)};i18n.phonenumbers.NumberFormat.prototype.getFormatOrDefault=function(){return this.get$ValueOrDefault(2)};i18n.phonenumbers.NumberFormat.prototype.setFormat=function(a){this.set$Value(2,a)};
 i18n.phonenumbers.NumberFormat.prototype.hasFormat=function(){return this.has$Value(2)};i18n.phonenumbers.NumberFormat.prototype.formatCount=function(){return this.count$Values(2)};i18n.phonenumbers.NumberFormat.prototype.clearFormat=function(){this.clear$Field(2)};i18n.phonenumbers.NumberFormat.prototype.getLeadingDigitsPattern=function(a){return this.get$Value(3,a)};i18n.phonenumbers.NumberFormat.prototype.getLeadingDigitsPatternOrDefault=function(a){return this.get$ValueOrDefault(3,a)};
@@ -345,22 +289,7 @@ type:i18n.phonenumbers.PhoneNumberDesc},21:{name:"pager",required:!0,fieldType:g
 24:{name:"no_international_dialling",required:!0,fieldType:goog.proto2.Message.FieldType.MESSAGE,type:i18n.phonenumbers.PhoneNumberDesc},9:{name:"id",required:!0,fieldType:goog.proto2.Message.FieldType.STRING,type:String},10:{name:"country_code",required:!0,fieldType:goog.proto2.Message.FieldType.INT32,type:Number},11:{name:"international_prefix",required:!0,fieldType:goog.proto2.Message.FieldType.STRING,type:String},17:{name:"preferred_international_prefix",fieldType:goog.proto2.Message.FieldType.STRING,
 type:String},12:{name:"national_prefix",fieldType:goog.proto2.Message.FieldType.STRING,type:String},13:{name:"preferred_extn_prefix",fieldType:goog.proto2.Message.FieldType.STRING,type:String},15:{name:"national_prefix_for_parsing",fieldType:goog.proto2.Message.FieldType.STRING,type:String},16:{name:"national_prefix_transform_rule",fieldType:goog.proto2.Message.FieldType.STRING,type:String},18:{name:"same_mobile_and_fixed_line_pattern",fieldType:goog.proto2.Message.FieldType.BOOL,defaultValue:!1,
 type:Boolean},19:{name:"number_format",repeated:!0,fieldType:goog.proto2.Message.FieldType.MESSAGE,type:i18n.phonenumbers.NumberFormat},20:{name:"intl_number_format",repeated:!0,fieldType:goog.proto2.Message.FieldType.MESSAGE,type:i18n.phonenumbers.NumberFormat},22:{name:"main_country_for_code",fieldType:goog.proto2.Message.FieldType.BOOL,defaultValue:!1,type:Boolean},23:{name:"leading_digits",fieldType:goog.proto2.Message.FieldType.STRING,type:String},26:{name:"leading_zero_possible",fieldType:goog.proto2.Message.FieldType.BOOL,
-defaultValue:!1,type:Boolean}});goog.proto2.Message.set$Metadata(i18n.phonenumbers.PhoneMetadataCollection,{0:{name:"PhoneMetadataCollection",fullName:"i18n.phonenumbers.PhoneMetadataCollection"},1:{name:"metadata",repeated:!0,fieldType:goog.proto2.Message.FieldType.MESSAGE,type:i18n.phonenumbers.PhoneMetadata}});/*
-
- Copyright (C) 2010 The Libphonenumber Authors
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+defaultValue:!1,type:Boolean}});goog.proto2.Message.set$Metadata(i18n.phonenumbers.PhoneMetadataCollection,{0:{name:"PhoneMetadataCollection",fullName:"i18n.phonenumbers.PhoneMetadataCollection"},1:{name:"metadata",repeated:!0,fieldType:goog.proto2.Message.FieldType.MESSAGE,type:i18n.phonenumbers.PhoneMetadata}});
 i18n.phonenumbers.metadata={};
 i18n.phonenumbers.metadata.countryCodeToRegionCodeMap={1:"US AG AI AS BB BM BS CA DM DO GD GU JM KN KY LC MP MS PR SX TC TT VC VG VI".split(" "),7:["RU","KZ"],20:["EG"],27:["ZA"],30:["GR"],31:["NL"],32:["BE"],33:["FR"],34:["ES"],36:["HU"],39:["IT"],40:["RO"],41:["CH"],43:["AT"],44:["GB","GG","IM","JE"],45:["DK"],46:["SE"],47:["NO","SJ"],48:["PL"],49:["DE"],51:["PE"],52:["MX"],53:["CU"],54:["AR"],55:["BR"],56:["CL"],57:["CO"],58:["VE"],60:["MY"],61:["AU","CC","CX"],62:["ID"],63:["PH"],64:["NZ"],65:["SG"],
 66:["TH"],81:["JP"],82:["KR"],84:["VN"],86:["CN"],90:["TR"],91:["IN"],92:["PK"],93:["AF"],94:["LK"],95:["MM"],98:["IR"],211:["SS"],212:["MA","EH"],213:["DZ"],216:["TN"],218:["LY"],220:["GM"],221:["SN"],222:["MR"],223:["ML"],224:["GN"],225:["CI"],226:["BF"],227:["NE"],228:["TG"],229:["BJ"],230:["MU"],231:["LR"],232:["SL"],233:["GH"],234:["NG"],235:["TD"],236:["CF"],237:["CM"],238:["CV"],239:["ST"],240:["GQ"],241:["GA"],242:["CG"],243:["CD"],244:["AO"],245:["GW"],246:["IO"],247:["AC"],248:["SC"],249:["SD"],
@@ -713,24 +642,7 @@ SK:[,[,,"[2-689]\\d{8}","\\d{9}"],[,,"[2-5]\\d{8}","\\d{9}",,,"212345678"],[,,"9
 "\\d{7,10}",,,"3451234567"],[,,"NA","NA"],[,,"NA","NA"],[,,"NA","NA"],[,,"NA","NA"],[,,"1(?:3(?:0[0347]|[13][0139]|2[035]|4[013568]|6[0459]|7[06]|8[15678]|9[0689])\\d{4}|6\\d{5,10})|345\\d{7}","\\d{7,12}",,,"3451234567"],"001",882,"",,,,,,,,[[,"(\\d{2})(\\d{4})(\\d{3})","$1 $2 $3",["3[23]"],"","",0],[,"(\\d{2})(\\d{5})","$1 $2",["16|342"],"","",0],[,"(\\d{2})(\\d{4})(\\d{4})","$1 $2 $3",["34[57]"],"","",0],[,"(\\d{3})(\\d{4})(\\d{4})","$1 $2 $3",["348"],"","",0],[,"(\\d{2})(\\d{2})(\\d{4})","$1 $2 $3",
 ["1"],"","",0],[,"(\\d{2})(\\d{3,4})(\\d{4})","$1 $2 $3",["16"],"","",0],[,"(\\d{2})(\\d{4,5})(\\d{5})","$1 $2 $3",["16"],"","",0]],,[,,"NA","NA"],,,[,,"NA","NA"],[,,"NA","NA"],,,[,,"348[57]\\d{7}","\\d{11}",,,"3451234567"]],883:[,[,,"51\\d{7}(?:\\d{3})?","\\d{9}(?:\\d{3})?",,,"510012345"],[,,"NA","NA",,,"510012345"],[,,"NA","NA",,,"510012345"],[,,"NA","NA"],[,,"NA","NA"],[,,"NA","NA"],[,,"NA","NA"],[,,"51(?:00\\d{5}(?:\\d{3})?|[13]0\\d{8})","\\d{9}(?:\\d{3})?",,,"510012345"],"001",883,"",,,,,,,1,
 [[,"(\\d{3})(\\d{3})(\\d{3})","$1 $2 $3",["510"],"","",0],[,"(\\d{3})(\\d{3})(\\d{3})(\\d{3})","$1 $2 $3 $4",["510"],"","",0],[,"(\\d{4})(\\d{4})(\\d{4})","$1 $2 $3",["51[13]"],"","",0]],,[,,"NA","NA"],,,[,,"NA","NA"],[,,"NA","NA"],,,[,,"NA","NA"]],888:[,[,,"\\d{11}","\\d{11}",,,"12345678901"],[,,"NA","NA",,,"12345678901"],[,,"NA","NA",,,"12345678901"],[,,"NA","NA"],[,,"NA","NA"],[,,"NA","NA"],[,,"NA","NA"],[,,"NA","NA"],"001",888,"",,,,,,,1,[[,"(\\d{3})(\\d{3})(\\d{5})","$1 $2 $3",,"","",0]],,[,
-,"NA","NA"],,,[,,"NA","NA"],[,,"\\d{11}","\\d{11}",,,"12345678901"],1,,[,,"NA","NA"]],979:[,[,,"\\d{9}","\\d{9}",,,"123456789"],[,,"NA","NA",,,"123456789"],[,,"NA","NA",,,"123456789"],[,,"NA","NA"],[,,"\\d{9}","\\d{9}",,,"123456789"],[,,"NA","NA"],[,,"NA","NA"],[,,"NA","NA"],"001",979,"",,,,,,,1,[[,"(\\d)(\\d{4})(\\d{4})","$1 $2 $3",,"","",0]],,[,,"NA","NA"],,,[,,"NA","NA"],[,,"NA","NA"],1,,[,,"NA","NA"]]};/*
-
- Protocol Buffer 2 Copyright 2008 Google Inc.
- All other code copyright its respective owners.
- Copyright (C) 2010 The Libphonenumber Authors
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+,"NA","NA"],,,[,,"NA","NA"],[,,"\\d{11}","\\d{11}",,,"12345678901"],1,,[,,"NA","NA"]],979:[,[,,"\\d{9}","\\d{9}",,,"123456789"],[,,"NA","NA",,,"123456789"],[,,"NA","NA",,,"123456789"],[,,"NA","NA"],[,,"\\d{9}","\\d{9}",,,"123456789"],[,,"NA","NA"],[,,"NA","NA"],[,,"NA","NA"],"001",979,"",,,,,,,1,[[,"(\\d)(\\d{4})(\\d{4})","$1 $2 $3",,"","",0]],,[,,"NA","NA"],,,[,,"NA","NA"],[,,"NA","NA"],1,,[,,"NA","NA"]]};
 i18n.phonenumbers.PhoneNumber=function(){goog.proto2.Message.apply(this)};goog.inherits(i18n.phonenumbers.PhoneNumber,goog.proto2.Message);i18n.phonenumbers.PhoneNumber.prototype.getCountryCode=function(){return this.get$Value(1)};i18n.phonenumbers.PhoneNumber.prototype.getCountryCodeOrDefault=function(){return this.get$ValueOrDefault(1)};i18n.phonenumbers.PhoneNumber.prototype.setCountryCode=function(a){this.set$Value(1,a)};i18n.phonenumbers.PhoneNumber.prototype.hasCountryCode=function(){return this.has$Value(1)};
 i18n.phonenumbers.PhoneNumber.prototype.countryCodeCount=function(){return this.count$Values(1)};i18n.phonenumbers.PhoneNumber.prototype.clearCountryCode=function(){this.clear$Field(1)};i18n.phonenumbers.PhoneNumber.prototype.getNationalNumber=function(){return this.get$Value(2)};i18n.phonenumbers.PhoneNumber.prototype.getNationalNumberOrDefault=function(){return this.get$ValueOrDefault(2)};i18n.phonenumbers.PhoneNumber.prototype.setNationalNumber=function(a){this.set$Value(2,a)};
 i18n.phonenumbers.PhoneNumber.prototype.hasNationalNumber=function(){return this.has$Value(2)};i18n.phonenumbers.PhoneNumber.prototype.nationalNumberCount=function(){return this.count$Values(2)};i18n.phonenumbers.PhoneNumber.prototype.clearNationalNumber=function(){this.clear$Field(2)};i18n.phonenumbers.PhoneNumber.prototype.getExtension=function(){return this.get$Value(3)};i18n.phonenumbers.PhoneNumber.prototype.getExtensionOrDefault=function(){return this.get$ValueOrDefault(3)};
@@ -743,22 +655,7 @@ i18n.phonenumbers.PhoneNumber.prototype.hasCountryCodeSource=function(){return t
 i18n.phonenumbers.PhoneNumber.prototype.setPreferredDomesticCarrierCode=function(a){this.set$Value(7,a)};i18n.phonenumbers.PhoneNumber.prototype.hasPreferredDomesticCarrierCode=function(){return this.has$Value(7)};i18n.phonenumbers.PhoneNumber.prototype.preferredDomesticCarrierCodeCount=function(){return this.count$Values(7)};i18n.phonenumbers.PhoneNumber.prototype.clearPreferredDomesticCarrierCode=function(){this.clear$Field(7)};
 i18n.phonenumbers.PhoneNumber.CountryCodeSource={FROM_NUMBER_WITH_PLUS_SIGN:1,FROM_NUMBER_WITH_IDD:5,FROM_NUMBER_WITHOUT_PLUS_SIGN:10,FROM_DEFAULT_COUNTRY:20};
 goog.proto2.Message.set$Metadata(i18n.phonenumbers.PhoneNumber,{0:{name:"PhoneNumber",fullName:"i18n.phonenumbers.PhoneNumber"},1:{name:"country_code",required:!0,fieldType:goog.proto2.Message.FieldType.INT32,type:Number},2:{name:"national_number",required:!0,fieldType:goog.proto2.Message.FieldType.UINT64,type:Number},3:{name:"extension",fieldType:goog.proto2.Message.FieldType.STRING,type:String},4:{name:"italian_leading_zero",fieldType:goog.proto2.Message.FieldType.BOOL,type:Boolean},8:{name:"number_of_leading_zeros",
-fieldType:goog.proto2.Message.FieldType.INT32,defaultValue:1,type:Number},5:{name:"raw_input",fieldType:goog.proto2.Message.FieldType.STRING,type:String},6:{name:"country_code_source",fieldType:goog.proto2.Message.FieldType.ENUM,defaultValue:i18n.phonenumbers.PhoneNumber.CountryCodeSource.FROM_NUMBER_WITH_PLUS_SIGN,type:i18n.phonenumbers.PhoneNumber.CountryCodeSource},7:{name:"preferred_domestic_carrier_code",fieldType:goog.proto2.Message.FieldType.STRING,type:String}});/*
-
- Copyright (C) 2010 The Libphonenumber Authors.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+fieldType:goog.proto2.Message.FieldType.INT32,defaultValue:1,type:Number},5:{name:"raw_input",fieldType:goog.proto2.Message.FieldType.STRING,type:String},6:{name:"country_code_source",fieldType:goog.proto2.Message.FieldType.ENUM,defaultValue:i18n.phonenumbers.PhoneNumber.CountryCodeSource.FROM_NUMBER_WITH_PLUS_SIGN,type:i18n.phonenumbers.PhoneNumber.CountryCodeSource},7:{name:"preferred_domestic_carrier_code",fieldType:goog.proto2.Message.FieldType.STRING,type:String}});
 i18n.phonenumbers.PhoneNumberUtil=function(){this.regionToMetadataMap={}};goog.addSingletonGetter(i18n.phonenumbers.PhoneNumberUtil);i18n.phonenumbers.Error={INVALID_COUNTRY_CODE:"Invalid country calling code",NOT_A_NUMBER:"The string supplied did not seem to be a phone number",TOO_SHORT_AFTER_IDD:"Phone number too short after IDD",TOO_SHORT_NSN:"The string supplied is too short to be a phone number",TOO_LONG:"The string supplied is too long to be a phone number"};
 i18n.phonenumbers.PhoneNumberUtil.NANPA_COUNTRY_CODE_=1;i18n.phonenumbers.PhoneNumberUtil.MIN_LENGTH_FOR_NSN_=2;i18n.phonenumbers.PhoneNumberUtil.MAX_LENGTH_FOR_NSN_=17;i18n.phonenumbers.PhoneNumberUtil.MAX_LENGTH_COUNTRY_CODE_=3;i18n.phonenumbers.PhoneNumberUtil.MAX_INPUT_STRING_LENGTH_=250;i18n.phonenumbers.PhoneNumberUtil.UNKNOWN_REGION_="ZZ";i18n.phonenumbers.PhoneNumberUtil.COLOMBIA_MOBILE_TO_FIXED_LINE_PREFIX_="3";i18n.phonenumbers.PhoneNumberUtil.MOBILE_TOKEN_MAPPINGS_={52:"1",54:"9"};
 i18n.phonenumbers.PhoneNumberUtil.PLUS_SIGN="+";i18n.phonenumbers.PhoneNumberUtil.STAR_SIGN_="*";i18n.phonenumbers.PhoneNumberUtil.RFC3966_EXTN_PREFIX_=";ext=";i18n.phonenumbers.PhoneNumberUtil.RFC3966_PREFIX_="tel:";i18n.phonenumbers.PhoneNumberUtil.RFC3966_PHONE_CONTEXT_=";phone-context=";i18n.phonenumbers.PhoneNumberUtil.RFC3966_ISDN_SUBADDRESS_=";isub=";
@@ -862,22 +759,7 @@ this.isNumberMatch(c,b);return c==i18n.phonenumbers.PhoneNumberUtil.MatchType.EX
 this.isNumberMatch(b,c)}else d=b.clone();c.clearRawInput();c.clearCountryCodeSource();c.clearPreferredDomesticCarrierCode();d.clearRawInput();d.clearCountryCodeSource();d.clearPreferredDomesticCarrierCode();c.hasExtension()&&0==c.getExtension().length&&c.clearExtension();d.hasExtension()&&0==d.getExtension().length&&d.clearExtension();if(c.hasExtension()&&d.hasExtension()&&c.getExtension()!=d.getExtension())return i18n.phonenumbers.PhoneNumberUtil.MatchType.NO_MATCH;var f=c.getCountryCodeOrDefault(),
 l=d.getCountryCodeOrDefault();if(0!=f&&0!=l)return c.equals(d)?i18n.phonenumbers.PhoneNumberUtil.MatchType.EXACT_MATCH:f==l&&this.isNationalNumberSuffixOfTheOther_(c,d)?i18n.phonenumbers.PhoneNumberUtil.MatchType.SHORT_NSN_MATCH:i18n.phonenumbers.PhoneNumberUtil.MatchType.NO_MATCH;c.setCountryCode(0);d.setCountryCode(0);return c.equals(d)?i18n.phonenumbers.PhoneNumberUtil.MatchType.NSN_MATCH:this.isNationalNumberSuffixOfTheOther_(c,d)?i18n.phonenumbers.PhoneNumberUtil.MatchType.SHORT_NSN_MATCH:i18n.phonenumbers.PhoneNumberUtil.MatchType.NO_MATCH};
 i18n.phonenumbers.PhoneNumberUtil.prototype.isNationalNumberSuffixOfTheOther_=function(a,b){var c=""+a.getNationalNumber(),d=""+b.getNationalNumber();return goog.string.endsWith(c,d)||goog.string.endsWith(d,c)};i18n.phonenumbers.PhoneNumberUtil.prototype.canBeInternationallyDialled=function(a){var b=this.getMetadataForRegion(this.getRegionCodeForNumber(a));if(null==b)return!0;a=this.getNationalSignificantNumber(a);return!this.isNumberMatchingDesc_(a,b.getNoInternationalDialling())};
-i18n.phonenumbers.PhoneNumberUtil.matchesEntirely_=function(a,b){var c="string"==typeof a?b.match("^(?:"+a+")$"):b.match(a);return c&&c[0].length==b.length?!0:!1};/*
-
- Copyright (C) 2010 The Libphonenumber Authors.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+i18n.phonenumbers.PhoneNumberUtil.matchesEntirely_=function(a,b){var c="string"==typeof a?b.match("^(?:"+a+")$"):b.match(a);return c&&c[0].length==b.length?!0:!1};
 i18n.phonenumbers.AsYouTypeFormatter=function(a){this.DIGIT_PLACEHOLDER_="\u2008";this.DIGIT_PATTERN_=new RegExp(this.DIGIT_PLACEHOLDER_);this.currentOutput_="";this.formattingTemplate_=new goog.string.StringBuffer;this.currentFormattingPattern_="";this.accruedInput_=new goog.string.StringBuffer;this.accruedInputWithoutFormatting_=new goog.string.StringBuffer;this.ableToFormat_=!0;this.isExpectingCountryCallingCode_=this.isCompleteNumber_=this.inputHasFormatting_=!1;this.phoneUtil_=i18n.phonenumbers.PhoneNumberUtil.getInstance();
 this.positionToRemember_=this.originalPosition_=this.lastMatchPosition_=0;this.prefixBeforeNationalNumber_=new goog.string.StringBuffer;this.shouldAddSpaceAfterNationalPrefix_=!1;this.extractedNationalPrefix_="";this.nationalNumber_=new goog.string.StringBuffer;this.possibleFormats_=[];this.defaultCountry_=a;this.defaultMetadata_=this.currentMetadata_=this.getMetadataForRegion_(this.defaultCountry_)};i18n.phonenumbers.AsYouTypeFormatter.SEPARATOR_BEFORE_NATIONAL_NUMBER_=" ";
 i18n.phonenumbers.AsYouTypeFormatter.EMPTY_METADATA_=new i18n.phonenumbers.PhoneMetadata;i18n.phonenumbers.AsYouTypeFormatter.EMPTY_METADATA_.setInternationalPrefix("NA");i18n.phonenumbers.AsYouTypeFormatter.CHARACTER_CLASS_PATTERN_=/\[([^\[\]])*\]/g;i18n.phonenumbers.AsYouTypeFormatter.STANDALONE_DIGIT_PATTERN_=/\d(?=[^,}][^,}])/g;

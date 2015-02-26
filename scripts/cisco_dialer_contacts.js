@@ -15,97 +15,101 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 var ciscoDialerGoogleContactsScript = new function () {
-    this.listening = false;
-    this.styles = {};
+	this.listening = false;
+	this.styles    = {};
 
-    this.getDialElement = function (typeName) {
-        var labelCaption = chrome.i18n.getMessage('dial_label', typeName);
-        if (!labelCaption) {
-            labelCaption = 'Dial' + (typeName ? ' ' + typeName : '');
-        }
+	this.getDialElement = function (typeName) {
+		var labelCaption = chrome.i18n.getMessage('dial_label', typeName);
+		if (!labelCaption) {
+			labelCaption = 'Dial' + (typeName ? ' ' + typeName : '');
+		}
+		
+		var rootNode = document.createElement('span');
+		rootNode.setAttribute('class', this.styles.rootClass);
+		
+		var containerNode = document.createElement('div');
+		containerNode.setAttribute('class', this.styles.containerClass);
+		
+		var imageNode = document.createElement('img');
+		imageNode.setAttribute('class', this.styles.imageClass);
+		imageNode.setAttribute('src', 'images/cleardot.gif');
+		imageNode.setAttribute('aria-label', labelCaption);
+		imageNode.setAttribute('data-tooltip', labelCaption);
+		
+		containerNode.appendChild(imageNode);
+		rootNode.appendChild(containerNode);
+		
+		rootNode.onmouseover = function (mouseOverImageEvent) {
+			mouseOverImageEvent.target.className += ' ' + this.styles.hoverClass;
+		}.bind(this);
+		
+		rootNode.onmouseout = function (mouseOutImageEvent) {
+			mouseOutImageEvent.target.className = mouseOutImageEvent.target.className.replace(
+				' ' + this.styles.hoverClass, '');
+		}.bind(this);
+		
+		return rootNode;
+	};
 
-        var rootNode = document.createElement('span');
-        rootNode.setAttribute('class', this.styles.rootClass);
+	this.onContentModified = function (subTreeModifiedEvent) {
+		var dialEntry = subTreeModifiedEvent.target;
+		if (dialEntry.className != this.styles.entryClass) {
+			return;
+		}
+		
+		dialEntry.onmouseover = function (mouseOverEntryEvent) {
+			var inputFields = mouseOverEntryEvent.target.getElementsByTagName('input');
+			if (!((inputFields.length > 0)
+				&& (inputFields[inputFields.length - 1].dir == 'ltr'))) {
+				return;
+			}
+			
+			var dialNumberField = inputFields[1];
+			if (!dialNumberField.value.trim()
+				|| dialEntry.getElementsByClassName('cisco_dial').length > 0) {
+				return;
+			}
+			
+			var newNode = this.getDialElement(inputFields[0].value);
+			newNode.onclick = function (onClickEvent) {
+				new ciscoDialerPhoneNumber(dialNumberField.value).dial();
+			};
+			
+			dialEntry.appendChild(newNode);
+		}.bind(this);
+	};
 
-        var containerNode = document.createElement('div');
-        containerNode.setAttribute('class', this.styles.containerClass);
+	this.initStyles = function () {
+		if (document.domain == 'mail.google.com') {
+			this.styles = {
+				'entryClass':     'acq',
+				'rootClass':      'RW',
+				'containerClass': 'acy J-J5-Ji',
+				'imageClass':     'abG cisco_dial d5',
+				'hoverClass':     'RP'
+			};
+		} else {
+			this.styles = {
+				'entryClass':     'zhiDhf',
+				'rootClass':      'pX8lof',
+				'containerClass': 'xd7oXd VIpgJd-TzA9Ye-eEGnhe',
+				'imageClass':     'R6l9wc cisco_dial QYqDmc',
+				'hoverClass':     'xA8pNd'
+			};
+		}
+	};
 
-        var imageNode = document.createElement('img');
-        imageNode.setAttribute('class', this.styles.imageClass);
-        imageNode.setAttribute('src', 'images/cleardot.gif');
-        imageNode.setAttribute('aria-label', labelCaption);
-        imageNode.setAttribute('data-tooltip', labelCaption);
+	this.onConfigChanged = function (sender) {
+		if (!this.listening && sender.canDial()) {
+			document.addEventListener('DOMSubtreeModified',
+				this.onContentModified.bind(this), false);
+			
+			this.initStyles();
+			this.listening = true;
+		}
+	};
 
-        containerNode.appendChild(imageNode);
-        rootNode.appendChild(containerNode);
-
-        rootNode.onmouseover = function (mouseOverImageEvent) {
-            mouseOverImageEvent.target.className += ' ' + this.styles.hoverClass;
-        }.bind(this);
-
-        rootNode.onmouseout = function (mouseOutImageEvent) {
-            mouseOutImageEvent.target.className = mouseOutImageEvent.target.className.replace(
-                ' ' + this.styles.hoverClass, '');
-        }.bind(this);
-
-        return rootNode;
-    };
-
-    this.onContentModified = function (subTreeModifiedEvent) {
-        var dialEntry = subTreeModifiedEvent.target;
-        if (dialEntry.className != this.styles.entryClass) {
-            return;
-        }
-
-        dialEntry.onmouseover = function (mouseOverEntryEvent) {
-            var inputFields = mouseOverEntryEvent.target.getElementsByTagName('input');
-            if (!((inputFields.length > 0) && (inputFields[inputFields.length - 1].dir == 'ltr'))) {
-                return;
-            }
-
-            var dialNumberField = inputFields[1];
-            if (!dialNumberField.value.trim() || dialEntry.getElementsByClassName('cisco_dial').length > 0) {
-                return;
-            }
-
-            var newNode = this.getDialElement(inputFields[0].value);
-            newNode.onclick = function (onClickEvent) {
-                new ciscoDialerPhoneNumber(dialNumberField.value).dial();
-            };
-
-            dialEntry.appendChild(newNode);
-        }.bind(this);
-    };
-
-    this.initStyles = function () {
-        if (document.domain == 'mail.google.com') {
-            this.styles = {
-                'entryClass': 'acq',
-                'rootClass': 'RW',
-                'containerClass': 'acy J-J5-Ji',
-                'imageClass': 'abG cisco_dial d5',
-                'hoverClass': 'RP'
-            };
-        } else {
-            this.styles = {
-                'entryClass': 'zhiDhf',
-                'rootClass': 'pX8lof',
-                'containerClass': 'xd7oXd VIpgJd-TzA9Ye-eEGnhe',
-                'imageClass': 'R6l9wc cisco_dial QYqDmc',
-                'hoverClass': 'xA8pNd'
-            };
-        }
-    };
-
-    this.onConfigChanged = function (sender) {
-        if (!this.listening && sender.canDial()) {
-            document.addEventListener('DOMSubtreeModified', this.onContentModified.bind(this), false);
-
-            this.initStyles();
-            this.listening = true;
-        }
-    };
-
-    ciscoDialer.notifyOnChange(this.onConfigChanged.bind(this));
+	ciscoDialer.notifyOnChange(this.onConfigChanged.bind(this));
 }

@@ -1,110 +1,842 @@
 ﻿{
-	"extension_name": {
-		"message": "Cisco Dialer (Beta)",
-		"description": "Name der Erweiterung"
-	},
-	"extension_description": {
-		"message": "Per Knopfdruck wählt dein Cisco Telefon eine Nummer direkt aus deinen Google Kontakten oder jeder besuchten Seite heraus.",
-		"description": "Text der beschreibt was diese Erweiterung tut"
-	},
-	"dial_label": {
-		"message": "$label$ wählen",
-		"description": "Text der auf dem tooltip gezeigt wird",
-		"placeholders": {
-			"label": {
-				"content": "$1",
-				"example": "Geschäftlich"
-			}
-		}
-	},
-	"error_connection_failed": {
-		"message": "Verbindung mit dem Telefon fehlgeschlagen.",
-		"description": "Fehlermeldung wenn die Verbindung zum Telefon fehlschlägt"
-	},
-	"error_dial_failed": {
-		"message": "Wählvorgang fehlgeschlagen mit Fehler: $code$ - $text$.",
-		"description": "Fehlermeldung wenn das Telefon einen Fehler zurück gibt",
-		"placeholders": {
-			"code": {
-				"content": "$1",
-				"example": "403"
-			},
-			"text": {
-				"content": "$2",
-				"example": "Nicht gefunden"
-			}		
-		}
-	},
-	"options_saved": {
-		"message": "Einstellungen gespeichert",
-		"description": "Nachricht die angezeigt wird wenn die Einstellungen gespeichert wurden"
-	},
-	"options_title": {
-		"message": "Cisco Dialer Konfiguration",
-		"description": "Titel für die Einstellungs-Seite"
-	},
-	"options_label_phone_address": {
-		"message": "Adresse des Telefons",
-		"description": "Kennzeichnung der Telefon-Adress Option"
-	},
-	"options_description_phone_address": {
-		"message": "IP Adresse oder Name deines Cisco Telefons. Der Web-Server Port kann hinzugefügt werden falls dieser sich vom Standart unterscheidet.",
-		"description": "Beschreibung für die Telefon-Adress Option"
-	},
-	"options_label_auth_config": {
-		"message": "Authentifizierung",
-		"description": "Kennzeichnung für die Authentifizierungs Optionen"
-	},
-	"options_description_auth_config": {
-		"message": "Gebe hier deinen Benutzernamen und dein Passwort ein falls dein Telefon dies Verlangt. Andernfalls diese Felder Bitte leer lassen.",
-		"description": "Beschreibung der Authentifizierungs Optionen"
-	},
-	"options_placeholder_username": {
-		"message": "Benutzername",
-		"description": "Kennzeichnung der Benutzernamen Option"
-	},
-	"options_placeholder_password": {
-		"message": "Passwort",
-		"description": "Kennzeichnung der Passwort Option"
-	},
-	"options_label_telephony_uri": {
-		"message": "Telefon URI",
-		"description": "Kennzeichnung für die Telefon URI Option"
-	},
-	"options_description_telephony_uri": {
-		"message": "Diese URI wird auf deinem Telefon ausgeführt um eine Nummer zu wählen. Der Ausdruck <b>{number}</b> wird durch die Nummer des Selektierten Eintrags ersetzt. Wenn du eine Zahl vorwählen musst, um raus Telefonieren zu können, kannst du diese der URI hinzufügen. <b>Dial:9{number}</b> würde zum Beispiel immer eine <b>9</b> vor jeder Nummer wählen.",
-		"description": "Beschreibung der Telefon URI option"
-	},
-	"options_label_country_code": {
-		"message": "Land",
-		"description": "Kennzeichnung für die Landes Option"
-	},
-	"options_placeholder_country_code": {
-		"message": "Bitte wählen...",
-		"description": "Text der angezeigt wird wenn noch kein Land ausgewählt ist"
-	},	
-	"options_description_country_code": {
-		"message": "Wähle hier das Land aus in dem du dich befindest. Wenn du dich in einem anderen Land befindest wie dein Dienstleister, wähle sein Land aus.",
-		"description": "Beschreibung für die Landes Option"
-	},
-	"options_label_functions": {
-		"message": "Funktionen",
-		"description": "Kennzeichnung für den Funktions Block"
-	},
-	"options_label_context_menu": {
-		"message": "Wählen über das Kontextmenü aktivieren",
-		"description": "Kennzeichnung für die Context Menu Option"
-	},
-	"options_label_inpage_dial": {
-		"message": "Erkennung von Telefonnummern auf allen Internetseiten aktivieren <span class=\"red\">(Beta)</span>",
-		"description": "Kennzeichnung für die In Page Dial Option"		
-	},
-	"options_button_save": {
-		"message": "Speichern",
-		"description": "Text auf dem Speichern Knopf"
-	},
-	"options_button_cancel": {
-		"message": "Abbrechen",
-		"description": "Text auf dem Abbrechen Knopf"
-	}
+    "extension_name": {
+        "message": "Cisco Dialer (Beta)",
+        "description": "Name der Erweiterung"
+    },
+    "extension_description": {
+        "message": "Per Knopfdruck wählt dein Cisco Telefon eine Nummer direkt aus deinen Google Kontakten oder jeder besuchten Seite heraus.",
+        "description": "Text der beschreibt was diese Erweiterung tut"
+    },
+    "dial_label": {
+        "message": "$label$ wählen",
+        "description": "Text der auf dem tooltip gezeigt wird",
+        "placeholders": {
+            "label": {
+                "content": "$1",
+                "example": "Geschäftlich"
+            }
+        }
+    },
+    "error_connection_failed": {
+        "message": "Verbindung mit dem Telefon fehlgeschlagen.",
+        "description": "Fehlermeldung wenn die Verbindung zum Telefon fehlschlägt"
+    },
+    "error_dial_failed": {
+        "message": "Wählvorgang fehlgeschlagen mit Fehler: $code$ - $text$.",
+        "description": "Fehlermeldung wenn das Telefon einen Fehler zurück gibt",
+        "placeholders": {
+            "code": {
+                "content": "$1",
+                "example": "403"
+            },
+            "text": {
+                "content": "$2",
+                "example": "Nicht gefunden"
+            }
+        }
+    },
+    "options_saved": {
+        "message": "Einstellungen gespeichert",
+        "description": "Nachricht die angezeigt wird wenn die Einstellungen gespeichert wurden"
+    },
+    "options_title": {
+        "message": "Cisco Dialer Konfiguration",
+        "description": "Titel für die Einstellungs-Seite"
+    },
+    "options_label_phone_address": {
+        "message": "Adresse des Telefons",
+        "description": "Kennzeichnung der Telefon-Adress Option"
+    },
+    "options_description_phone_address": {
+        "message": "IP Adresse oder Name deines Cisco Telefons. Der Web-Server Port kann hinzugefügt werden falls dieser sich vom Standart unterscheidet.",
+        "description": "Beschreibung für die Telefon-Adress Option"
+    },
+    "options_label_auth_config": {
+        "message": "Authentifizierung",
+        "description": "Kennzeichnung für die Authentifizierungs Optionen"
+    },
+    "options_description_auth_config": {
+        "message": "Gebe hier deinen Benutzernamen und dein Passwort ein falls dein Telefon dies Verlangt. Andernfalls diese Felder Bitte leer lassen.",
+        "description": "Beschreibung der Authentifizierungs Optionen"
+    },
+    "options_placeholder_username": {
+        "message": "Benutzername",
+        "description": "Kennzeichnung der Benutzernamen Option"
+    },
+    "options_placeholder_password": {
+        "message": "Passwort",
+        "description": "Kennzeichnung der Passwort Option"
+    },
+    "options_label_telephony_uri": {
+        "message": "Telefon URI",
+        "description": "Kennzeichnung für die Telefon URI Option"
+    },
+    "options_description_telephony_uri": {
+        "message": "Diese URI wird auf deinem Telefon ausgeführt um eine Nummer zu wählen. Der Ausdruck <b>{number}</b> wird durch die Nummer des Selektierten Eintrags ersetzt. Wenn du eine Zahl vorwählen musst, um raus Telefonieren zu können, kannst du diese der URI hinzufügen. <b>Dial:9{number}</b> würde zum Beispiel immer eine <b>9</b> vor jeder Nummer wählen.",
+        "description": "Beschreibung der Telefon URI option"
+    },
+    "options_label_country_code": {
+        "message": "Land",
+        "description": "Kennzeichnung für die Landes Option"
+    },
+    "options_placeholder_country_code": {
+        "message": "Bitte wählen...",
+        "description": "Text der angezeigt wird wenn noch kein Land ausgewählt ist"
+    },
+    "options_description_country_code": {
+        "message": "Wähle hier das Land aus in dem du dich befindest. Wenn du dich in einem anderen Land befindest wie dein Dienstleister, wähle sein Land aus.",
+        "description": "Beschreibung für die Landes Option"
+    },
+    "options_label_functions": {
+        "message": "Funktionen",
+        "description": "Kennzeichnung für den Funktions Block"
+    },
+    "options_label_context_menu": {
+        "message": "Wählen über das Kontextmenü aktivieren",
+        "description": "Kennzeichnung für die Context Menu Option"
+    },
+    "options_label_inpage_dial": {
+        "message": "Erkennung von Telefonnummern auf allen Internetseiten aktivieren <span class=\"red\">(Beta)</span>",
+        "description": "Kennzeichnung für die In Page Dial Option"
+    },
+    "options_button_save": {
+        "message": "Speichern",
+        "description": "Text auf dem Speichern Knopf"
+    },
+    "options_button_cancel": {
+        "message": "Abbrechen",
+        "description": "Text auf dem Abbrechen Knopf"
+    },
+    "country_code_AF": {
+        "message": "Afghanistan"
+    },
+    "country_code_AL": {
+        "message": "Albanien"
+    },
+    "country_code_DZ": {
+        "message": "Algerien"
+    },
+    "country_code_AS": {
+        "message": "Amerikanisch-Samoa"
+    },
+    "country_code_AD": {
+        "message": "Andorra"
+    },
+    "country_code_AO": {
+        "message": "Angola"
+    },
+    "country_code_AI": {
+        "message": "Anguilla"
+    },
+    "country_code_AQ": {
+        "message": "Antarktika"
+    },
+    "country_code_AG": {
+        "message": "Antigua und Barbuda"
+    },
+    "country_code_AR": {
+        "message": "Argentinien"
+    },
+    "country_code_AM": {
+        "message": "Armenien"
+    },
+    "country_code_AW": {
+        "message": "Aruba"
+    },
+    "country_code_AC": {
+        "message": "Ascension"
+    },
+    "country_code_AU": {
+        "message": "Australien"
+    },
+    "country_code_AT": {
+        "message": "Österreich"
+    },
+    "country_code_AZ": {
+        "message": "Aserbaidschan"
+    },
+    "country_code_BS": {
+        "message": "Bahamas"
+    },
+    "country_code_BH": {
+        "message": "Bahrain"
+    },
+    "country_code_BD": {
+        "message": "Bangladesch"
+    },
+    "country_code_BB": {
+        "message": "Barbados"
+    },
+    "country_code_BY": {
+        "message": "Belarus"
+    },
+    "country_code_BE": {
+        "message": "Belgien"
+    },
+    "country_code_BZ": {
+        "message": "Belize"
+    },
+    "country_code_BJ": {
+        "message": "Benin"
+    },
+    "country_code_BM": {
+        "message": "Bermuda"
+    },
+    "country_code_BT": {
+        "message": "Bhutan"
+    },
+    "country_code_BO": {
+        "message": "Bolivien"
+    },
+    "country_code_BA": {
+        "message": "Bosnien und Herzegowina"
+    },
+    "country_code_BW": {
+        "message": "Botswana"
+    },
+    "country_code_BV": {
+        "message": "Bouvetinsel"
+    },
+    "country_code_BR": {
+        "message": "Brasilien"
+    },
+    "country_code_IO": {
+        "message": "Britisches Territorium im Indischen Ozean"
+    },
+    "country_code_BN": {
+        "message": "Brunei Darussalam"
+    },
+    "country_code_BG": {
+        "message": "Bulgarien"
+    },
+    "country_code_BF": {
+        "message": "Burkina Faso"
+    },
+    "country_code_BI": {
+        "message": "Burundi"
+    },
+    "country_code_KH": {
+        "message": "Kambodscha"
+    },
+    "country_code_CM": {
+        "message": "Kamerun"
+    },
+    "country_code_CA": {
+        "message": "Kanada"
+    },
+    "country_code_CV": {
+        "message": "Kap Verde"
+    },
+    "country_code_KY": {
+        "message": "Kaimaninseln"
+    },
+    "country_code_CF": {
+        "message": "Zentralafrikanische Republik"
+    },
+    "country_code_TD": {
+        "message": "Tschad"
+    },
+    "country_code_CL": {
+        "message": "Chile"
+    },
+    "country_code_CN": {
+        "message": "China, Volksrepublik"
+    },
+    "country_code_CX": {
+        "message": "Weihnachtsinsel"
+    },
+    "country_code_CC": {
+        "message": "Kokosinseln"
+    },
+    "country_code_CO": {
+        "message": "Kolumbien"
+    },
+    "country_code_KM": {
+        "message": "Komoren"
+    },
+    "country_code_CG": {
+        "message": "Republik Kongo"
+    },
+    "country_code_CK": {
+        "message": "Cookinseln"
+    },
+    "country_code_CR": {
+        "message": "Costa Rica"
+    },
+    "country_code_CI": {
+        "message": "Côte d’Ivoire (Elfenbeinküste)"
+    },
+    "country_code_HR": {
+        "message": "Kroatien"
+    },
+    "country_code_CU": {
+        "message": "Kuba"
+    },
+    "country_code_CY": {
+        "message": "Zypern"
+    },
+    "country_code_CZ": {
+        "message": "Tschechische Republik"
+    },
+    "country_code_CD": {
+        "message": "Kongo, Demokratische Republik (ehem. Zaire)"
+    },
+    "country_code_DK": {
+        "message": "Dänemark"
+    },
+    "country_code_DJ": {
+        "message": "Dschibuti"
+    },
+    "country_code_DM": {
+        "message": "Dominica"
+    },
+    "country_code_DO": {
+        "message": "Dominikanische Republik"
+    },
+    "country_code_TL": {
+        "message": "Osttimor (Timor-Leste)"
+    },
+    "country_code_EC": {
+        "message": "Ecuador"
+    },
+    "country_code_EG": {
+        "message": "Ägypten"
+    },
+    "country_code_SV": {
+        "message": "El Salvador"
+    },
+    "country_code_GQ": {
+        "message": "Äquatorialguinea"
+    },
+    "country_code_ER": {
+        "message": "Eritrea"
+    },
+    "country_code_EE": {
+        "message": "Estland"
+    },
+    "country_code_ET": {
+        "message": "Äthiopien"
+    },
+    "country_code_FK": {
+        "message": "Falklandinseln"
+    },
+    "country_code_FO": {
+        "message": "Färöer"
+    },
+    "country_code_FJ": {
+        "message": "Fidschi"
+    },
+    "country_code_FI": {
+        "message": "Finnland"
+    },
+    "country_code_FR": {
+        "message": "Frankreich"
+    },
+    "country_code_FX": {
+        "message": "Metropolitanes Frankreich"
+    },
+    "country_code_GF": {
+        "message": "Französisch-Guayana"
+    },
+    "country_code_PF": {
+        "message": "Französisch-Polynesien"
+    },
+    "country_code_TF": {
+        "message": "Französische Süd- und Antarktisgebiete"
+    },
+    "country_code_GA": {
+        "message": "Gabun"
+    },
+    "country_code_GM": {
+        "message": "Gambia"
+    },
+    "country_code_GE": {
+        "message": "Georgien"
+    },
+    "country_code_DE": {
+        "message": "Deutschland"
+    },
+    "country_code_GH": {
+        "message": "Ghana"
+    },
+    "country_code_GI": {
+        "message": "Gibraltar"
+    },
+    "country_code_GR": {
+        "message": "Griechenland"
+    },
+    "country_code_GL": {
+        "message": "Grönland"
+    },
+    "country_code_GD": {
+        "message": "Grenada"
+    },
+    "country_code_GP": {
+        "message": "Guadeloupe"
+    },
+    "country_code_GU": {
+        "message": "Guam"
+    },
+    "country_code_GT": {
+        "message": "Guatemala"
+    },
+    "country_code_GN": {
+        "message": "Guinea"
+    },
+    "country_code_GW": {
+        "message": "Guinea-Bissau"
+    },
+    "country_code_GY": {
+        "message": "Guyana"
+    },
+    "country_code_HT": {
+        "message": "Haiti"
+    },
+    "country_code_HM": {
+        "message": "Heard und McDonaldinseln"
+    },
+    "country_code_HN": {
+        "message": "Honduras"
+    },
+    "country_code_HK": {
+        "message": "Hongkong"
+    },
+    "country_code_HU": {
+        "message": "Ungarn"
+    },
+    "country_code_IS": {
+        "message": "Island"
+    },
+    "country_code_IN": {
+        "message": "Indien"
+    },
+    "country_code_ID": {
+        "message": "Indonesien"
+    },
+    "country_code_IR": {
+        "message": "Iran, Islamische Republik"
+    },
+    "country_code_IQ": {
+        "message": "Irak"
+    },
+    "country_code_IE": {
+        "message": "Irland"
+    },
+    "country_code_IM": {
+        "message": "Insel Man"
+    },
+    "country_code_IL": {
+        "message": "Israel"
+    },
+    "country_code_IT": {
+        "message": "Italien"
+    },
+    "country_code_JM": {
+        "message": "Jamaika"
+    },
+    "country_code_JP": {
+        "message": "Japan"
+    },
+    "country_code_JO": {
+        "message": "Jordanien"
+    },
+    "country_code_KZ": {
+        "message": "Kasachstan"
+    },
+    "country_code_KE": {
+        "message": "Kenia"
+    },
+    "country_code_KI": {
+        "message": "Kiribati"
+    },
+    "country_code_KW": {
+        "message": "Kuwait"
+    },
+    "country_code_KG": {
+        "message": "Kirgisistan"
+    },
+    "country_code_LA": {
+        "message": "Laos, Demokratische Volksrepublik"
+    },
+    "country_code_LV": {
+        "message": "Lettland"
+    },
+    "country_code_LB": {
+        "message": "Libanon"
+    },
+    "country_code_LS": {
+        "message": "Lesotho"
+    },
+    "country_code_LR": {
+        "message": "Liberia"
+    },
+    "country_code_LY": {
+        "message": "Libyen"
+    },
+    "country_code_LI": {
+        "message": "Liechtenstein"
+    },
+    "country_code_LT": {
+        "message": "Litauen"
+    },
+    "country_code_LU": {
+        "message": "Luxemburg"
+    },
+    "country_code_MO": {
+        "message": "Macau"
+    },
+    "country_code_MK": {
+        "message": "Mazedonien"
+    },
+    "country_code_MG": {
+        "message": "Madagaskar"
+    },
+    "country_code_MW": {
+        "message": "Malawi"
+    },
+    "country_code_MY": {
+        "message": "Malaysia"
+    },
+    "country_code_MV": {
+        "message": "Malediven"
+    },
+    "country_code_ML": {
+        "message": "Mali"
+    },
+    "country_code_MT": {
+        "message": "Malta"
+    },
+    "country_code_MH": {
+        "message": "Marshallinseln"
+    },
+    "country_code_MQ": {
+        "message": "Martinique"
+    },
+    "country_code_MR": {
+        "message": "Mauretanien"
+    },
+    "country_code_MU": {
+        "message": "Mauritius"
+    },
+    "country_code_YT": {
+        "message": "Mayotte"
+    },
+    "country_code_MX": {
+        "message": "Mexiko"
+    },
+    "country_code_FM": {
+        "message": "Mikronesien"
+    },
+    "country_code_MD": {
+        "message": "Moldawien (Republik Moldau)"
+    },
+    "country_code_MC": {
+        "message": "Monaco"
+    },
+    "country_code_MN": {
+        "message": "Mongolei"
+    },
+    "country_code_ME": {
+        "message": "Montenegro"
+    },
+    "country_code_MS": {
+        "message": "Montserrat"
+    },
+    "country_code_MA": {
+        "message": "Marokko"
+    },
+    "country_code_MZ": {
+        "message": "Mosambik"
+    },
+    "country_code_MM": {
+        "message": "Myanmar (Burma)"
+    },
+    "country_code_NA": {
+        "message": "Namibia"
+    },
+    "country_code_NR": {
+        "message": "Nauru"
+    },
+    "country_code_NP": {
+        "message": "Nepal"
+    },
+    "country_code_NL": {
+        "message": "Niederlande"
+    },
+    "country_code_AN": {
+        "message": "Niederländische Antillen"
+    },
+    "country_code_NC": {
+        "message": "Neukaledonien"
+    },
+    "country_code_NZ": {
+        "message": "Neuseeland"
+    },
+    "country_code_NI": {
+        "message": "Nicaragua"
+    },
+    "country_code_NE": {
+        "message": "Niger"
+    },
+    "country_code_NG": {
+        "message": "Nigeria"
+    },
+    "country_code_NU": {
+        "message": "Niue"
+    },
+    "country_code_NF": {
+        "message": "Norfolkinsel"
+    },
+    "country_code_KP": {
+        "message": "Korea, Demokratische Volksrepublik (Nordkorea)"
+    },
+    "country_code_MP": {
+        "message": "Nördliche Marianen"
+    },
+    "country_code_NO": {
+        "message": "Norwegen"
+    },
+    "country_code_OM": {
+        "message": "Oman"
+    },
+    "country_code_PK": {
+        "message": "Pakistan"
+    },
+    "country_code_PW": {
+        "message": "Palau"
+    },
+    "country_code_PS": {
+        "message": "Staat Palästina"
+    },
+    "country_code_PA": {
+        "message": "Panama"
+    },
+    "country_code_PG": {
+        "message": "Papua-Neuguinea"
+    },
+    "country_code_PY": {
+        "message": "Paraguay"
+    },
+    "country_code_PE": {
+        "message": "Peru"
+    },
+    "country_code_PH": {
+        "message": "Philippinen"
+    },
+    "country_code_PN": {
+        "message": "Pitcairninseln"
+    },
+    "country_code_PL": {
+        "message": "Polen"
+    },
+    "country_code_PT": {
+        "message": "Portugal"
+    },
+    "country_code_PR": {
+        "message": "Puerto Rico"
+    },
+    "country_code_QA": {
+        "message": "Katar"
+    },
+    "country_code_RE": {
+        "message": "Réunion"
+    },
+    "country_code_RO": {
+        "message": "Rumänien"
+    },
+    "country_code_RU": {
+        "message": "Russische Föderation"
+    },
+    "country_code_RW": {
+        "message": "Ruanda"
+    },
+    "country_code_SH": {
+        "message": "St. Helena"
+    },
+    "country_code_KN": {
+        "message": "St. Kitts und Nevis"
+    },
+    "country_code_LC": {
+        "message": "St. Lucia"
+    },
+    "country_code_PM": {
+        "message": "Saint-Pierre und Miquelon"
+    },
+    "country_code_VC": {
+        "message": "St. Vincent und die Grenadinen"
+    },
+    "country_code_SM": {
+        "message": "San Marino"
+    },
+    "country_code_ST": {
+        "message": "São Tomé und Príncipe"
+    },
+    "country_code_SA": {
+        "message": "Saudi-Arabien"
+    },
+    "country_code_SN": {
+        "message": "Senegal"
+    },
+    "country_code_RS": {
+        "message": "Serbien"
+    },
+    "country_code_SC": {
+        "message": "Seychellen"
+    },
+    "country_code_SL": {
+        "message": "Sierra Leone"
+    },
+    "country_code_SG": {
+        "message": "Singapur"
+    },
+    "country_code_SK": {
+        "message": "Slowakei"
+    },
+    "country_code_SI": {
+        "message": "Slowenien"
+    },
+    "country_code_SB": {
+        "message": "Salomonen"
+    },
+    "country_code_SO": {
+        "message": "Somalia"
+    },
+    "country_code_ZA": {
+        "message": "Südafrika"
+    },
+    "country_code_GS": {
+        "message": "Südgeorgien und die Südlichen Sandwichinseln"
+    },
+    "country_code_KR": {
+        "message": "Korea, Republik (Südkorea)"
+    },
+    "country_code_ES": {
+        "message": "Spanien"
+    },
+    "country_code_LK": {
+        "message": "Sri Lanka"
+    },
+    "country_code_SD": {
+        "message": "Sudan"
+    },
+    "country_code_SR": {
+        "message": "Suriname"
+    },
+    "country_code_SJ": {
+        "message": "Svalbard und Jan Mayen"
+    },
+    "country_code_SZ": {
+        "message": "Swasiland"
+    },
+    "country_code_SE": {
+        "message": "Schweden"
+    },
+    "country_code_CH": {
+        "message": "Schweiz (Confoederatio Helvetica)"
+    },
+    "country_code_SY": {
+        "message": "Syrien, Arabische Republik"
+    },
+    "country_code_TW": {
+        "message": "Republik China (Taiwan)"
+    },
+    "country_code_TJ": {
+        "message": "Tadschikistan"
+    },
+    "country_code_TZ": {
+        "message": "Tansania, Vereinigte Republik"
+    },
+    "country_code_TH": {
+        "message": "Thailand"
+    },
+    "country_code_TG": {
+        "message": "Togo"
+    },
+    "country_code_TK": {
+        "message": "Tokelau"
+    },
+    "country_code_TO": {
+        "message": "Tonga"
+    },
+    "country_code_TT": {
+        "message": "Trinidad und Tobago"
+    },
+    "country_code_TN": {
+        "message": "Tunesien"
+    },
+    "country_code_TR": {
+        "message": "Türkei"
+    },
+    "country_code_TM": {
+        "message": "Turkmenistan"
+    },
+    "country_code_TC": {
+        "message": "Turks- und Caicosinseln"
+    },
+    "country_code_TV": {
+        "message": "Tuvalu"
+    },
+    "country_code_UG": {
+        "message": "Uganda"
+    },
+    "country_code_UA": {
+        "message": "Ukraine"
+    },
+    "country_code_AE": {
+        "message": "Vereinigte Arabische Emirate"
+    },
+    "country_code_GB": {
+        "message": "Vereinigtes Königreich Großbritannien und Nordirland"
+    },
+    "country_code_US": {
+        "message": "Vereinigte Staaten von Amerika"
+    },
+    "country_code_UM": {
+        "message": "United States Minor Outlying Islands"
+    },
+    "country_code_UY": {
+        "message": "Uruguay"
+    },
+    "country_code_UZ": {
+        "message": "Usbekistan"
+    },
+    "country_code_VU": {
+        "message": "Vanuatu"
+    },
+    "country_code_VA": {
+        "message": "Vatikanstadt"
+    },
+    "country_code_VE": {
+        "message": "Venezuela"
+    },
+    "country_code_VN": {
+        "message": "Vietnam"
+    },
+    "country_code_VG": {
+        "message": "Britische Jungferninseln"
+    },
+    "country_code_VI": {
+        "message": "Amerikanische Jungferninseln"
+    },
+    "country_code_WF": {
+        "message": "Wallis und Futuna"
+    },
+    "country_code_EH": {
+        "message": "Westsahara"
+    },
+    "country_code_WS": {
+        "message": "Samoa"
+    },
+    "country_code_YE": {
+        "message": "Jemen"
+    },
+    "country_code_YU": {
+        "message": "Jugoslawien"
+    },
+    "country_code_ZM": {
+        "message": "Sambia"
+    },
+    "country_code_ZW": {
+        "message": "Simbabwe"
+    }
 }
