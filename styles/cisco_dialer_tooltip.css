@@ -16,17 +16,14 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.cisco_tooltip {
-	display: block;
-	position: absolute;
-	z-index: 9999;
+div.cisco_tooltip {
 	-webkit-border-radius: 0;
 	-webkit-box-shadow: none;
 	-webkit-transition: visibility 0, opacity .13s ease-in;
 	background-color: #eee;
 	display: block;
 	opacity: 1;
-	position: absolute;
+	z-index: 9999;
 	visibility: visible;
 	cursor: pointer;
 	background-image: url('chrome-extension://__MSG_@@extension_id__/images/cisco_dialer_icon_128px.png'); 
@@ -39,16 +36,22 @@
 	box-sizing: content-box;
 }
 
-.cisco_hidden {
+div.cisco_hidden {
 	-webkit-transition: visibility .13s, opacity .13s ease-out, left 0 linear .13s, top 0 linear .13s;
 	opacity: 0;
-	left: 20px !important;
-	top: 20px !important;
 	visibility: hidden;
 }
 
-.cisco_hover {
+div.cisco_hover {
 	-webkit-transition: background-color .13s ease-in, border-color .13s ease-in;
 	background-color: #12F729;
 	border-color: #12F729;
+}
+
+div.cisco_absolute {
+	position: absolute;
+}
+
+div.cisco_fixed {
+	position: fixed;
 }

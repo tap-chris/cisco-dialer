@@ -6,14 +6,13 @@
 	<title id="pageTitle"></title>
 	<link href="/styles/cisco_dialer_config.css" rel="stylesheet" type="text/css">
 	<style>
-		body 			{ overflow-x: hidden; }
-		p				{ text-align: justify; }
-		div.container	{ width: 600px; margin: auto; padding: 0px 30px 40px 20px; }
-		div.settings	{ display: block; margin: 0 15px; }
-		div.buttons		{ margin: 0.8em 0; }
+		body            { overflow-x: hidden; }
+		p               { text-align: justify; }
+		div.container   { width: 600px; margin: auto; padding: 0px 30px 40px 20px; }
+		div.settings    { display: block; margin: 0 15px; }
+		div.buttons     { margin: 0.8em 0; }
 		div.buttons > * { position: relative; float: left; margin-right: 15px !important; }
-		div.message		{ color: #F03; margin-top: 3px; }
-		span.red		{ color: #F03; font-weight: bold; }
+		div.message     { color: #F03; margin-top: 3px; }
 	</style>
 </head>
 
@@ -25,27 +24,13 @@
 		<h3 id="phoneAddressLabel"></h3>
 		<div class="settings">
 			<input type="text" size="55" name="phoneAdress" id="phoneAdress" />
-			<p></p>
-			<div id="phoneAddressDescription"></div>
-		</div>
-
-		<h3 id="authConfigLabel"></h3>
-		<div class="settings">
-			<input type="text" size="25" name="authUser" id="authUser" />
-			<input type="password" size="24" name="authSecret" id="authSecret" />
-			<p id="authConfigDescription"></p>
+			<p id="phoneAddressDescription"></p>
 		</div>
 
 		<h3 id="countryCodeLabel"></h3>
 		<div class="settings">
 			<select name="countryCode" id="countryCode"></select>
 			<p id="countryCodeDescription"></p>
-		</div>
-
-		<h3 id="telUriLabel"></h3>
-		<div class="settings">
-			<input type="text" size="55" name="telephonyUri" id="telephonyUri" />
-			<p id="telUriDescription"></p>
 		</div>
 
 		<h3 id="functionsLabel"></h3>
@@ -62,6 +47,20 @@
 			</div>
  		</div>
 
+		<h3 id="authConfigLabel"></h3>
+		<div class="settings">
+			<input type="text" size="25" name="authUser" id="authUser" />
+			<input type="password" size="24" name="authSecret" id="authSecret" />
+			<p id="authConfigDescription"></p>
+		</div>
+
+		<h3 id="telUriLabel"></h3>
+		<div class="settings">
+			<input type="text" size="55" name="telephonyUri" id="telephonyUri" />
+			<p id="telUriDescription"></p>
+		</div>
+
+		<hr/>
 		<p></p>
 
 		<div class="buttons">

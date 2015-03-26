@@ -29,9 +29,13 @@ var ciscoDialerEventHandler = new function () {
 		if ((ciscoDialer.configOptions.contextMenu == 'true')
 			&& !this.contextMenuInstalled) {
 			chrome.contextMenus.create({
-				'title': chrome.i18n.getMessage('dial_label', '%s'),
+				'title':    chrome.i18n.getMessage('dial_label', '%s'),
 				'contexts': ['selection'],
-				'id': chrome.i18n.getMessage('@@extension_id')
+				'id':       chrome.i18n.getMessage('@@extension_id')
+			}, function() {
+				if (chrome.runtime.lastError) {
+					ciscoDialer.log(chrome.runtime.lastError.message);
+				}
 			});
 			
 			chrome.contextMenus.onClicked.addListener(
@@ -64,7 +68,8 @@ var ciscoDialerEventHandler = new function () {
 	this.openConfigTab = function () {
 		if (!this.configTabOpened) {
 			var optionsUrl = '';
-			if (window.navigator.userAgent.match(/Chrome\/4/)) {
+			
+			if (/Chrome\/4/.test(window.navigator.userAgent)) {
 				optionsUrl = 'chrome://extensions/?options='
 					+ chrome.i18n.getMessage('@@extension_id');
 			}
@@ -74,10 +79,14 @@ var ciscoDialerEventHandler = new function () {
 					 + chrome.runtime.getManifest().options_page;
 			}
 			
-			chrome.tabs.create({url: optionsUrl, active: true});
+			chrome.tabs.create({
+				url:    optionsUrl,
+				active: true
+			});
+			
 			this.configTabOpened = true;
 		}
-	}
+	};
 
 	this.onInstalled = function () {
 		this.onConfigChanged(this);

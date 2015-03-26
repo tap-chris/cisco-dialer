@@ -117,8 +117,8 @@ var ciscoDialer = new function () {
 
 	this.showMessage = function (message, placeholders) {
 		chrome.notifications.create('', {
-			type: 'basic',
-			title: chrome.i18n.getMessage('extension_name'),
+			type:    'basic',
+			title:   chrome.i18n.getMessage('extension_name'),
 			message: chrome.i18n.getMessage(message, placeholders),
 			iconUrl: 'chrome-extension://'
 				+ chrome.i18n.getMessage('@@extension_id')
@@ -148,7 +148,14 @@ var ciscoDialer = new function () {
 	this.notifyOnChange = function (onChange) {
 		this.listeners.push(onChange);
 	};
-
+	
+	this.log = function (message) {
+		if (message) {
+			console.log(chrome.i18n.getMessage('extension_name')
+				+ ': ' + message.toString());
+		}
+	};
+	
 	chrome.storage.sync.get(this.configOptions, this.onConfigChanged.bind(this));
 	chrome.storage.onChanged.addListener(this.onConfigChanged.bind(this));
 }
@@ -200,7 +207,7 @@ function ciscoDialerPhoneNumber (phoneNumber, countryCode) {
 	};
 
 	this.format = function (countryCode) {
-		if (this.value.indexOf('*') == 0) {
+		if (this.value.indexOf('*') === 0) {
 			return this;
 		}
 		

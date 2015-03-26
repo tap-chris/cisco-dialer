@@ -67,7 +67,7 @@ var ciscoDialerConfig = new function () {
 		for (var fieldName in this.lingualFields) {
 			var message = chrome.i18n.getMessage(this.lingualFields[fieldName]);
 			
-			if (this.lingualFields[fieldName].match(/placeholder/)) {
+			if (/placeholder/.test(this.lingualFields[fieldName])) {
 				document.getElementById(fieldName).setAttribute('placeholder', message);
 			}
 			else if (this.lingualFields.hasOwnProperty(fieldName)) {
@@ -81,7 +81,7 @@ var ciscoDialerConfig = new function () {
 			var value = ciscoDialer.configOptions[option];
 			var element = document.getElementById(option);
 			
-			if (element != undefined) {
+			if (element !== undefined) {
 				if (element.nodeName.toLowerCase() == 'select') {
 					this.populateList(element, value);
 				}
@@ -89,7 +89,7 @@ var ciscoDialerConfig = new function () {
 					element.checked = value == 'true';
 				}
 				else {
-					element.value = option.match(/Secret/) 
+					element.value = /Secret/.test(option) 
 						? (value ? ciscoDialer.decryptSecret(value) : '') : value;
 				}
 			}
@@ -126,14 +126,14 @@ var ciscoDialerConfig = new function () {
 		
 		for (var option in ciscoDialer.configOptions) {
 			var element = document.getElementById(option);
-			var value = element != undefined 
+			var value = element !== undefined 
 				? element.value : ciscoDialer.configOptions[option];
 			
 			if (element.getAttribute('type') == 'checkbox') {
 				value = element.checked ? 'true' : 'false';
 			}
 			
-			ciscoDialer.configOptions[option] = option.match(/Secret/)
+			ciscoDialer.configOptions[option] = /Secret/.test(option)
 				? ciscoDialer.encryptSecret(value) : value.trim();
 		}
 		

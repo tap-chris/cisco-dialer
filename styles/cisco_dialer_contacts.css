@@ -16,6 +16,6 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.cisco_dial {
+img.cisco_dial {
 	background: url('chrome-extension://__MSG_@@extension_id__/images/cisco_dialer_icon_dial.png') center center no-repeat;
 }

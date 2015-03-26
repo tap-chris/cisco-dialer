@@ -96,7 +96,7 @@
         "description": "Kennzeichnung für die Context Menu Option"
     },
     "options_label_inpage_dial": {
-        "message": "Erkennung von Telefonnummern auf allen Internetseiten aktivieren <span class=\"red\">(Beta)</span>",
+        "message": "Erkennung von Telefonnummern auf allen Internetseiten aktivieren",
         "description": "Kennzeichnung für die In Page Dial Option"
     },
     "options_button_save": {

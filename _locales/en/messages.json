@@ -96,7 +96,7 @@
         "description": "Label for the context menu option"
     },
     "options_label_inpage_dial": {
-        "message": "Activate detection of phone numbers on all websites <span class=\"red\">(Beta)</span>",
+        "message": "Activate detection of phone numbers on all websites",
         "description": "Label for the in page dial option"
     },
     "options_button_save": {
