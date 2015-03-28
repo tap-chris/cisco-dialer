@@ -17,7 +17,7 @@
  */
 
 var ciscoDialerContentScript = new function () {
-    this.listening = false;
+	this.listening = false;
 	this.tooltip   = null;
 	this.delay     = 500;
 	this.modified  = [];

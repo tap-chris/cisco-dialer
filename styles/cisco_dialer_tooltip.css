@@ -17,7 +17,7 @@
  */
 
 div.cisco_tooltip {
-	-webkit-border-radius: 0;
+	-webkit-border-radius: 50%;
 	-webkit-box-shadow: none;
 	-webkit-transition: visibility 0, opacity .13s ease-in;
 	background-color: #eee;
@@ -26,13 +26,10 @@ div.cisco_tooltip {
 	z-index: 9999;
 	visibility: visible;
 	cursor: pointer;
-	background-image: url('chrome-extension://__MSG_@@extension_id__/images/cisco_dialer_icon_128px.png'); 
+	background-image: url('chrome-extension://__MSG_@@extension_id__/images/cisco_dialer_icon_content.png'); 
 	background-repeat: no-repeat;
 	background-size: contain;
-	-webkit-border-top-right-radius: 10px;
-	-webkit-border-bottom-right-radius: 10px;
 	border: 2px solid #eee;
-	border-right: 4px solid #eee;
 	box-sizing: content-box;
 }
 
