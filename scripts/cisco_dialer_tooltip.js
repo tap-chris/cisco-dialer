@@ -79,10 +79,10 @@ function ciscoDialerTooltipContainer (parent) {
                 var rect = this.getOffsetRect(this.parent);
 			}        
 			
-			this.tooltip.style.top = (rect.top - 2) + 'px';	
+			this.tooltip.style.top = rect.top + 'px';	
 			this.tooltip.style.left = (rect.left + this.parent.offsetWidth + 2) + 'px';
-			this.tooltip.style.height = (this.parent.offsetHeight) + 'px';
-			this.tooltip.style.width = (this.parent.offsetHeight) + 'px';
+			this.tooltip.style.height = this.parent.offsetHeight + 'px';
+			this.tooltip.style.width = this.parent.offsetHeight + 'px';
 		}
 	}
 
