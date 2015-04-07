@@ -299,6 +299,13 @@ Full-Width Styles
   padding: 50px 10px 30px 10px;
 }
 
+#project_logo {
+  background: url(../images/cisco_dialer_icon.png) no-repeat center;
+  background-size: contain;
+  width: 200px;
+  text-align: center;
+}
+
 #project_title {
   margin: 0;
   color: #fff;
@@ -322,10 +329,9 @@ Full-Width Styles
   bottom: -40px;
   right: 0;
   height: 70px;
-  background: url('../images/icon_download.png') no-repeat 0% 90%;
 }
 
-.zip_download_link {
+.addToChrome_link {
   display: block;
   float: right;
   width: 90px;
@@ -335,7 +341,7 @@ Full-Width Styles
   background: url(../images/sprite_download.png) no-repeat bottom left;
 }
 
-.tar_download_link {
+.addToChromeBeta_link {
   display: block;
   float: right;
   width: 90px;
@@ -346,11 +352,11 @@ Full-Width Styles
   margin-left: 10px;
 }
 
-.zip_download_link:hover {
+.addToChrome_link:hover {
   background: url(../images/sprite_download.png) no-repeat top left;
 }
 
-.tar_download_link:hover {
+.addToChromeBeta_link:hover {
   background: url(../images/sprite_download.png) no-repeat top right;
 }
 
