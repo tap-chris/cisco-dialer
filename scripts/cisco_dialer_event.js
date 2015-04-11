@@ -28,10 +28,11 @@ var ciscoDialerEventHandler = new function () {
 	this.installContextMenu = function () {
 		if ((ciscoDialer.configOptions.contextMenu == 'true')
 			&& !this.contextMenuInstalled) {
+			
 			chrome.contextMenus.create({
 				'title':    chrome.i18n.getMessage('dial_label', '%s'),
 				'contexts': ['selection'],
-				'id':       chrome.i18n.getMessage('@@extension_id')
+				'id':       'contextMenu@' + chrome.i18n.getMessage('@@extension_id')
 			}, function() {
 				if (chrome.runtime.lastError) {
 					ciscoDialer.log(chrome.runtime.lastError.message);
@@ -40,12 +41,16 @@ var ciscoDialerEventHandler = new function () {
 			
 			chrome.contextMenus.onClicked.addListener(
 				this.onContextMenuClick.bind(this));
+			
 			this.contextMenuInstalled = true;
 		}
 		else if ((ciscoDialer.configOptions.contextMenu == 'false')
 			&& this.contextMenuInstalled) {
+			
 			this.contextMenuInstalled = false;
-			chrome.contextMenus.remove(chrome.i18n.getMessage('@@extension_id'));
+			
+			chrome.contextMenus.remove('contextMenu@'
+				+ chrome.i18n.getMessage('@@extension_id'));
 		}
 	};
 
@@ -53,8 +58,9 @@ var ciscoDialerEventHandler = new function () {
 		if (!this.omniBoxInstalled) {
 			chrome.omnibox.onInputChanged.addListener(function(text, suggest) {
 				chrome.omnibox.setDefaultSuggestion({
-					description: chrome.i18n.getMessage(
-						'dial_label', text ? text : '...')});
+					description: chrome.i18n.getMessage('dial_label',
+						text ? '<match>' + text + '</match>' : '<dim>...</dim>')
+				});
 			});
 			
 			chrome.omnibox.onInputEntered.addListener(function(text) {

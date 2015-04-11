@@ -147,6 +147,10 @@ var ciscoDialerContentScript = new function () {
 	};
 
 	this.onSubtreeModified = function (subtreeModifiedEvent) {
+		if (this.tooltip !== null) {
+			this.tooltip.update();
+		}
+		
 		var node = subtreeModifiedEvent.target;
 		if (this.skip.indexOf(node) < 0) {
 			this.parseNodeAsync(node);
