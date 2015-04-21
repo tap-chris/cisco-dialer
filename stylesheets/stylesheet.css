@@ -302,7 +302,7 @@ Full-Width Styles
 #project_logo {
   background: url(../images/cisco_dialer_icon.png) no-repeat center;
   background-size: contain;
-  width: 200px;
+  width: 300px;
   text-align: center;
 }
 
