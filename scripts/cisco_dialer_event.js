@@ -22,7 +22,7 @@ var ciscoDialerEventHandler = new function () {
 	this.configTabOpened      = false;
 
 	this.onContextMenuClick = function (info, tab) {
-		new ciscoDialerPhoneNumber(info.selectionText).dial();
+		new ciscoDialerPhoneNumber(info.selectionText).dial(false);
 	};
 
 	this.installContextMenu = function () {
@@ -64,7 +64,7 @@ var ciscoDialerEventHandler = new function () {
 			});
 			
 			chrome.omnibox.onInputEntered.addListener(function(text) {
-				new ciscoDialerPhoneNumber(text).dial();
+				new ciscoDialerPhoneNumber(text).dial(false);
 			});
 			
 			this.omniBoxInstalled = true;

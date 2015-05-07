@@ -132,12 +132,17 @@ var ciscoDialer = new function () {
 			&& this.configOptions.countryCode;
 	};
 
-	this.dialNumber = function (phoneNumber) {
+	this.dialNumber = function (phoneNumber, runtime) {
 		if (this.canDial()) {
-			this.sendRuntimeMessage({'dial': {
-				'phoneNumber': new ciscoDialerPhoneNumber(
-					phoneNumber, this.configOptions.countryCode).format().clean().toString()
-			}});
+			if (runtime === false) {
+				this.onDialRequest(phoneNumber);
+			}
+			else {
+				this.sendRuntimeMessage({'dial': {
+					'phoneNumber': new ciscoDialerPhoneNumber(
+						phoneNumber, this.configOptions.countryCode).format().clean().toString()
+				}});
+			}
 		}
 	};
 
@@ -226,8 +231,8 @@ function ciscoDialerPhoneNumber (phoneNumber, countryCode) {
 		return this;
 	};
 
-	this.dial = function () {
-		return ciscoDialer.dialNumber(this.toString());
+	this.dial = function (runtime) {
+		return ciscoDialer.dialNumber(this.toString(), runtime);
 	};
 
 	this.indexIn = function (list) {

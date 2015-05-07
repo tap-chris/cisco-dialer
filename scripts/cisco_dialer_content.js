@@ -93,13 +93,18 @@ var ciscoDialerContentScript = new function () {
 					result.push(phoneNumber);
 				}
 			}
+			
+			if (result.length > 0) {
+				this.skip.push(node);
+				this.replaceNumbers(node, result);
+			}
 		}
 		
 		return result;
 	};
 
 	this.replaceNumbers = function (node, phoneNumbers) {
-		var nodeContent = node.innerHTML;
+		var nodeContent = node.nodeValue;
 		for (var numberIndex = 0; numberIndex < phoneNumbers.length; numberIndex++) {
 			var phoneNumber = phoneNumbers[numberIndex];
 			
@@ -107,8 +112,15 @@ var ciscoDialerContentScript = new function () {
 				'<dial number="' + phoneNumber.clean().toString() + '">$&</dial>');
 		}
 		
-		node.innerHTML = nodeContent;
-		this.updateDialLinks(node);
+		var dialer = document.createElement('dialer');
+		dialer.innerHTML = nodeContent;
+		node.parentNode.replaceChild(dialer, node);
+		
+		while (dialer.firstChild) {
+			dialer.parentNode.insertBefore(dialer.firstChild, dialer);
+		}
+		
+		dialer.parentNode.removeChild(dialer);
 	};
 
 	this.parseNode = function (node) {
@@ -129,8 +141,7 @@ var ciscoDialerContentScript = new function () {
 			}
 			
 			if (phoneNumbers.length > 0) {
-				this.skip.push(node);
-				this.replaceNumbers(node, phoneNumbers);
+				this.updateDialLinks(node);
 			}
 		}
 	};
