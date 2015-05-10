@@ -42,6 +42,20 @@ var ciscoDialerConfig = new function () {
 		'telephonyUri',
 		'countryCode'
 	];
+	
+	this.advancedFunctionsVisible = true;
+	this.toggleAdvancedFunctions  = function () {
+		this.advancedFunctionsVisible = !this.advancedFunctionsVisible;
+		
+		var label = chrome.i18n.getMessage('options_label_advanced_functions', [
+			chrome.i18n.getMessage('options_state_'
+				+ (this.advancedFunctionsVisible ? 'hide' : 'show'))
+		]);
+		
+		document.getElementById('toggleAdvanced').innerHTML = label;
+		document.getElementById('advancedFunctions').setAttribute('class',
+			this.advancedFunctionsVisible ? 'show' : 'hide');
+	};
 
 	this.getCountryOptions = function (selected) {
 		var options = selected ? '' : '<option>'
@@ -155,11 +169,17 @@ var ciscoDialerConfig = new function () {
 
 	this.onContentLoaded = function () {
 		this.loadLocale();
+		this.toggleAdvancedFunctions();
+		
 		for (var index = 0, size = this.requiredFields.length; index < size; index++) {
 			document.querySelector('#' + this.requiredFields[index]).addEventListener(
 				'input', this.changed.bind(this));
 		}
 		
+		this.restore();
+		
+		document.querySelector('#toggleAdvanced').addEventListener(
+			'click', this.toggleAdvancedFunctions.bind(this));
 		document.querySelector('#saveConfig').addEventListener(
 			'click', this.save.bind(this));
 		document.querySelector('#cancelConfig').addEventListener(

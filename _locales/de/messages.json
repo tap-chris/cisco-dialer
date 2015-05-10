@@ -107,6 +107,24 @@
         "message": "Abbrechen",
         "description": "Text auf dem Abbrechen Knopf"
     },
+	"options_label_advanced_functions": {
+		"message": "Erweiterte Einstellungen $state$",
+		"description": "Kennzeichnung für die Erweiterten Einstellungen",
+        "placeholders": {
+            "state": {
+                "content": "$1",
+                "example": "anzeigen"
+            }
+        }
+	},
+	"options_state_show": {
+		"message": "anzeigen",
+		"description": "Optionen einblenden"
+	},
+	"options_state_hide": {
+		"message": "ausblenden",
+		"description": "Optionen ausblenden"
+	},
     "country_code_AF": {
         "message": "Afghanistan"
     },

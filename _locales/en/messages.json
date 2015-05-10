@@ -107,6 +107,24 @@
         "message": "Cancel",
         "description": "Text on the cancel button"
     },
+	"options_label_advanced_functions": {
+		"message": "$state$ advanced options",
+		"description": "Label for the advanced options",
+        "placeholders": {
+            "state": {
+                "content": "$1",
+                "example": "Show"
+            }
+        }
+	},
+	"options_state_show": {
+		"message": "Show",
+		"description": "Show options"
+	},
+	"options_state_hide": {
+		"message": "Hide",
+		"description": "Hide options"
+	},
     "country_code_AF": {
         "message": "Afghanistan"
     },
