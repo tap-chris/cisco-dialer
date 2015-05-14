@@ -132,11 +132,10 @@ var ciscoDialerContentScript = new function () {
 
 	this.parseNode = function (node) {
 		var nodeName = node.nodeName.toLowerCase();
-		var childNodes = node.childNodes.length;
 
 		if (this.dontParse.indexOf(nodeName) < 0) {
 			var phoneNumbers = [];
-			for (var nodeIndex = 0; nodeIndex < childNodes; nodeIndex++) {
+			for (var nodeIndex = 0; nodeIndex < node.childNodes.length; nodeIndex++) {
 				var child = node.childNodes[nodeIndex];
 
 				if (child.nodeType == Node.TEXT_NODE) {
