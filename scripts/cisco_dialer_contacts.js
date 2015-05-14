@@ -18,6 +18,7 @@
 
 var ciscoDialerGoogleContactsScript = new function () {
 	this.listening = false;
+	this.eventName = 'DOMSubtreeModified';
 	this.styles    = {};
 
 	this.getDialElement = function (typeName) {
@@ -25,32 +26,54 @@ var ciscoDialerGoogleContactsScript = new function () {
 		if (!labelCaption) {
 			labelCaption = 'Dial' + (typeName ? ' ' + typeName : '');
 		}
-		
+
 		var rootNode = document.createElement('span');
 		rootNode.setAttribute('class', this.styles.rootClass);
-		
+
 		var containerNode = document.createElement('div');
 		containerNode.setAttribute('class', this.styles.containerClass);
-		
+
 		var imageNode = document.createElement('img');
+		imageNode.rootNode = rootNode;
 		imageNode.setAttribute('class', this.styles.imageClass);
 		imageNode.setAttribute('src', 'images/cleardot.gif');
 		imageNode.setAttribute('aria-label', labelCaption);
 		imageNode.setAttribute('data-tooltip', labelCaption);
-		
+
 		containerNode.appendChild(imageNode);
 		rootNode.appendChild(containerNode);
-		
+
 		rootNode.onmouseover = function (mouseOverImageEvent) {
 			mouseOverImageEvent.target.className += ' ' + this.styles.hoverClass;
 		}.bind(this);
-		
+
 		rootNode.onmouseout = function (mouseOutImageEvent) {
 			mouseOutImageEvent.target.className = mouseOutImageEvent.target.className.replace(
 				' ' + this.styles.hoverClass, '');
 		}.bind(this);
-		
+
 		return rootNode;
+	};
+
+	this.extensionAlive = function () {
+		if (chrome.i18n.getMessage('@@extension_id') != undefined) {
+			return true;
+		}
+
+		if (this.listening) {
+			document.removeEventListener(this.eventName,
+				this.onContentModified.bind(this), false);
+
+			var dialIcons = document.getElementsByClassName('cisco_dial');
+			for (var iconIndex = 0, iconCount = dialIcons.length;
+				iconIndex < iconCount; iconIndex++) {
+			    dialIcons[0].rootNode.parentNode.removeChild(dialIcons[0].rootNode);
+			}
+
+			this.listening = false;
+		}
+
+		return false;
 	};
 
 	this.onContentModified = function (subTreeModifiedEvent) {
@@ -58,25 +81,29 @@ var ciscoDialerGoogleContactsScript = new function () {
 		if (dialEntry.className != this.styles.entryClass) {
 			return;
 		}
-		
+
 		dialEntry.onmouseover = function (mouseOverEntryEvent) {
+			if (!this.extensionAlive()) {
+				return;
+			}
+
 			var inputFields = mouseOverEntryEvent.target.getElementsByTagName('input');
 			if (!((inputFields.length > 0)
 				&& (inputFields[inputFields.length - 1].dir == 'ltr'))) {
 				return;
 			}
-			
+
 			var dialNumberField = inputFields[1];
-			if (!dialNumberField.value.trim()
-				|| dialEntry.getElementsByClassName('cisco_dial').length > 0) {
+			var dialIcons = dialEntry.getElementsByClassName('cisco_dial');
+			if (!dialNumberField.value.trim() || (dialIcons.length > 0)) {
 				return;
 			}
-			
+
 			var newNode = this.getDialElement(inputFields[0].value);
 			newNode.onclick = function (onClickEvent) {
 				new ciscoDialerPhoneNumber(dialNumberField.value).dial();
 			};
-			
+
 			dialEntry.appendChild(newNode);
 		}.bind(this);
 	};
@@ -103,9 +130,9 @@ var ciscoDialerGoogleContactsScript = new function () {
 
 	this.onConfigChanged = function (sender) {
 		if (!this.listening && sender.canDial()) {
-			document.addEventListener('DOMSubtreeModified',
+			document.addEventListener(this.eventName,
 				this.onContentModified.bind(this), false);
-			
+
 			this.initStyles();
 			this.listening = true;
 		}

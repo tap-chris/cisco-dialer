@@ -28,7 +28,7 @@ var ciscoDialerEventHandler = new function () {
 	this.installContextMenu = function () {
 		if ((ciscoDialer.configOptions.contextMenu == 'true')
 			&& !this.contextMenuInstalled) {
-			
+
 			chrome.contextMenus.create({
 				'title':    chrome.i18n.getMessage('dial_label', '%s'),
 				'contexts': ['selection'],
@@ -38,17 +38,17 @@ var ciscoDialerEventHandler = new function () {
 					ciscoDialer.log(chrome.runtime.lastError.message);
 				}
 			});
-			
+
 			chrome.contextMenus.onClicked.addListener(
 				this.onContextMenuClick.bind(this));
-			
+
 			this.contextMenuInstalled = true;
 		}
 		else if ((ciscoDialer.configOptions.contextMenu == 'false')
 			&& this.contextMenuInstalled) {
-			
+
 			this.contextMenuInstalled = false;
-			
+
 			chrome.contextMenus.remove('contextMenu@'
 				+ chrome.i18n.getMessage('@@extension_id'));
 		}
@@ -62,11 +62,11 @@ var ciscoDialerEventHandler = new function () {
 						text ? '<match>' + text + '</match>' : '<dim>...</dim>')
 				});
 			});
-			
+
 			chrome.omnibox.onInputEntered.addListener(function(text) {
 				new ciscoDialerPhoneNumber(text).dial(false);
 			});
-			
+
 			this.omniBoxInstalled = true;
 		}
 	};
@@ -74,7 +74,7 @@ var ciscoDialerEventHandler = new function () {
 	this.openConfigTab = function () {
 		if (!this.configTabOpened) {
 			var optionsUrl = '';
-			
+
 			if (/Chrome\/4/.test(window.navigator.userAgent)) {
 				optionsUrl = 'chrome://extensions/?options='
 					+ chrome.i18n.getMessage('@@extension_id');
@@ -84,18 +84,20 @@ var ciscoDialerEventHandler = new function () {
 					 + chrome.i18n.getMessage('@@extension_id')
 					 + chrome.runtime.getManifest().options_page;
 			}
-			
+
 			chrome.tabs.create({
 				url:    optionsUrl,
 				active: true
 			});
-			
+
 			this.configTabOpened = true;
 		}
 	};
 
-	this.onInstalled = function () {
-		this.onConfigChanged(this);
+	this.onInstalled = function (details) {
+		if (details.reason == 'install') {
+			this.onConfigChanged(this);
+		}
 	};
 
 	this.onConfigChanged = function (sender) {

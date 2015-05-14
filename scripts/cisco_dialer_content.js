@@ -45,14 +45,16 @@ var ciscoDialerContentScript = new function () {
 	this.updateDialLinks = function (rootNode) {
 		var links = rootNode.getElementsByTagName('dial');
 		var linkCount = links.length;
-		
+
 		for (var linkIndex = 0; linkIndex < linkCount; linkIndex++) {
 			var phoneNumber = links[linkIndex].getAttribute('number');
-			
+
 			links[linkIndex].onmouseover = function (onMouseOverEvent) {
-				this.tooltip.assign(onMouseOverEvent.target);
+				if (this.extensionAlive()) {
+					this.tooltip.assign(onMouseOverEvent.target);
+				}
 			}.bind(this);
-			
+
 			links[linkIndex].onmouseout = function () {
 				this.tooltip.hide(this.delay);
 			}.bind(this);
@@ -62,13 +64,18 @@ var ciscoDialerContentScript = new function () {
 	this.removeLinks = function (rootNode) {
 		var links = rootNode.getElementsByTagName('dial');
 		var linkCount = links.length;
-		
+
 		for (var linkIndex = 0; linkIndex < linkCount; linkIndex++) {
-			var parentNode = links[linkIndex].parentNode;
-			
-			if (parentNode !== undefined) {
-				parentNode.innerHTML = parentNode.innerHTML.replace(
-					/<dial[^>]+>([^<]+)<\/dial>/g, '$1');
+			try {
+				var parentNode = links[linkIndex].parentNode;
+
+				if (parentNode !== undefined) {
+					parentNode.innerHTML = parentNode.innerHTML.replace(
+						/<dial[^>]+>([^<]+)<\/dial>/g, '$1');
+				}
+			}
+			catch (error) {
+				continue;
 			}
 		}
 	};
@@ -78,7 +85,7 @@ var ciscoDialerContentScript = new function () {
 			var numbers = node.nodeValue.match(
 				/([\/=a-z]?\+?[0-9\(\[][0-9\.\-\(\)\[\]\{\}\/\s\u00A0]+[0-9\)\]][:a-z]?)/ig);
 			var numberCount = numbers !== null ? numbers.length : 0;
-			
+
 			for (var index = 0; index < numberCount; index++) {
 				var number = numbers[index].trim();
 				if (this.isDate(number)
@@ -86,20 +93,20 @@ var ciscoDialerContentScript = new function () {
 					|| (number.replace(/[^0-9]/g, '').length < 3)) {
 					continue;
 				}
-				
+
 				var phoneNumber = new ciscoDialerPhoneNumber(
 					number, ciscoDialer.configOptions.countryCode);
 				if ((phoneNumber.indexIn(result) < 0) && phoneNumber.valid()) {
 					result.push(phoneNumber);
 				}
 			}
-			
+
 			if (result.length > 0) {
 				this.skip.push(node);
 				this.replaceNumbers(node, result);
 			}
 		}
-		
+
 		return result;
 	};
 
@@ -107,31 +114,31 @@ var ciscoDialerContentScript = new function () {
 		var nodeContent = node.nodeValue;
 		for (var numberIndex = 0; numberIndex < phoneNumbers.length; numberIndex++) {
 			var phoneNumber = phoneNumbers[numberIndex];
-			
+
 			nodeContent = nodeContent.replace(this.numberToRegexp(phoneNumber.rawNumber()),
 				'<dial number="' + phoneNumber.clean().toString() + '">$&</dial>');
 		}
-		
+
 		var dialer = document.createElement('dialer');
 		dialer.innerHTML = nodeContent;
 		node.parentNode.replaceChild(dialer, node);
-		
+
 		while (dialer.firstChild) {
 			dialer.parentNode.insertBefore(dialer.firstChild, dialer);
 		}
-		
+
 		dialer.parentNode.removeChild(dialer);
 	};
 
 	this.parseNode = function (node) {
 		var nodeName = node.nodeName.toLowerCase();
 		var childNodes = node.childNodes.length;
-		
+
 		if (this.dontParse.indexOf(nodeName) < 0) {
 			var phoneNumbers = [];
 			for (var nodeIndex = 0; nodeIndex < childNodes; nodeIndex++) {
 				var child = node.childNodes[nodeIndex];
-				
+
 				if (child.nodeType == Node.TEXT_NODE) {
 					phoneNumbers = this.parseTextNode(child, phoneNumbers);
 				}
@@ -139,7 +146,7 @@ var ciscoDialerContentScript = new function () {
 					this.parseNode(child);
 				}
 			}
-			
+
 			if (phoneNumbers.length > 0) {
 				this.updateDialLinks(node);
 			}
@@ -149,7 +156,7 @@ var ciscoDialerContentScript = new function () {
 	this.parseNodeAsync = function (node) {
 		if (this.listening && (this.modified.indexOf(node) < 0)) {
 			this.modified.push(node);
-			
+
 			setTimeout(function () {
 				this.parseNode(node);
 				this.modified.splice(this.modified.indexOf(node), 1);
@@ -157,11 +164,43 @@ var ciscoDialerContentScript = new function () {
 		}
 	};
 
+	this.extensionAlive = function () {
+		if (chrome.i18n.getMessage('@@extension_id') != undefined) {
+			return true;
+		}
+
+		if (this.listening) {
+			this.disableContent();
+		}
+
+		return false;
+	};
+
+	this.enableContent = function () {
+		this.listening = true;
+
+		if (document.body !== undefined) {
+			this.tooltip = new ciscoDialerTooltipContainer(document.body);
+			this.parseNodeAsync(document.body);
+		}
+
+		document.addEventListener(this.eventName,
+			this.onSubtreeModified.bind(this), true);
+	};
+
+	this.disableContent = function () {
+		this.listening = false;
+
+		document.removeEventListener(this.eventName,
+			this.onSubtreeModified.bind(this), true);
+		this.removeLinks(document.body);
+	};
+
 	this.onSubtreeModified = function (subtreeModifiedEvent) {
 		if (this.tooltip !== null) {
 			this.tooltip.update();
 		}
-		
+
 		var node = subtreeModifiedEvent.target;
 		if (this.skip.indexOf(node) < 0) {
 			this.parseNodeAsync(node);
@@ -174,22 +213,10 @@ var ciscoDialerContentScript = new function () {
 	this.onConfigChanged = function (sender) {
 		if (!this.listening && sender.canDial()
 			&& (sender.configOptions.inPageDial == 'true')) {
-			this.listening = true;
-			
-			if (document.body !== undefined) {
-				this.tooltip = new ciscoDialerTooltipContainer(document.body);
-				this.parseNodeAsync(document.body);
-			}
-			
-			document.addEventListener(this.eventName,
-				this.onSubtreeModified.bind(this), true);
+			this.enableContent();
 		}
 		else if (this.listening && (sender.configOptions.inPageDial == 'false')) {
-			this.listening = false;
-			
-			document.removeEventListener(this.eventName,
-				this.onSubtreeModified.bind(this), true);
-			this.removeLinks(document.body);
+			this.disableContent();
 		}
 	};
 
