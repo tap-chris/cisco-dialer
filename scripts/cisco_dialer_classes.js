@@ -65,9 +65,9 @@ var ciscoDialer = new function () {
 					? chromeStorage[option].newValue : chromeStorage[option];
 			}
 		}
-		
+
 		this.loaded = true;
-		
+
 		for (var index = 0, size = this.listeners.length; index < size; index++) {
 			this.listeners[index](this);
 		}
@@ -100,7 +100,7 @@ var ciscoDialer = new function () {
 
 	this.sendRequest = function (uri, request, onResponse) {
 		var xmlHttp = new XMLHttpRequest();
-		
+
 		xmlHttp.onreadystatechange = function () {
 			onResponse(xmlHttp);
 		};
@@ -134,14 +134,14 @@ var ciscoDialer = new function () {
 
 	this.dialNumber = function (phoneNumber, runtime) {
 		if (this.canDial()) {
+			phoneNumber = new ciscoDialerPhoneNumber(
+				phoneNumber, this.configOptions.countryCode).format().clean().toString();
+				
 			if (runtime === false) {
 				this.onDialRequest(phoneNumber);
 			}
 			else {
-				this.sendRuntimeMessage({'dial': {
-					'phoneNumber': new ciscoDialerPhoneNumber(
-						phoneNumber, this.configOptions.countryCode).format().clean().toString()
-				}});
+				this.sendRuntimeMessage({'dial': {'phoneNumber': phoneNumber}});
 			}
 		}
 	};
@@ -153,20 +153,20 @@ var ciscoDialer = new function () {
 	this.notifyOnChange = function (onChange) {
 		this.listeners.push(onChange);
 	};
-	
+
 	this.log = function (message) {
 		if (message) {
 			console.log(chrome.i18n.getMessage('extension_name')
 				+ ': ' + message.toString());
 		}
 	};
-	
+
 	chrome.storage.sync.get(this.configOptions, this.onConfigChanged.bind(this));
 	chrome.storage.onChanged.addListener(this.onConfigChanged.bind(this));
 }
 
 function ciscoDialerPhoneNumber (phoneNumber, countryCode) {
-	this.value     = typeof phoneNumber == 'ciscoDialerPhoneNumber' 
+	this.value     = typeof phoneNumber == 'ciscoDialerPhoneNumber'
 		? phoneNumber.toString() : new String(phoneNumber);
 	this.rawValue  = this.value.trim();
 	this.buffer    = null;
@@ -202,7 +202,7 @@ function ciscoDialerPhoneNumber (phoneNumber, countryCode) {
 				return null;
 			}
 		}
-		
+
 		return this.buffer;
 	};
 
@@ -215,7 +215,7 @@ function ciscoDialerPhoneNumber (phoneNumber, countryCode) {
 		if (this.value.indexOf('*') === 0) {
 			return this;
 		}
-		
+
 		var number = this.getBuffer(this.getRegion(countryCode));
 		if (number !== null) {
 			if (this.phoneUtil.isValidNumberForRegion(number, this.getRegion(countryCode))) {
@@ -227,7 +227,7 @@ function ciscoDialerPhoneNumber (phoneNumber, countryCode) {
 					number, this.getRegion(countryCode)).toString();
 			}
 		}
-		
+
 		return this;
 	};
 
@@ -241,7 +241,7 @@ function ciscoDialerPhoneNumber (phoneNumber, countryCode) {
 				return index;
 			}
 		}
-		
+
 		return -1;
 	};
 }
