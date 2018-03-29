@@ -48,7 +48,7 @@
         "description": "Kennzeichnung der Telefon-Adress Option"
     },
     "options_description_phone_address": {
-        "message": "IP Adresse oder Name deines Cisco Telefons. Der Web-Server Port kann hinzugefügt werden falls dieser sich vom Standart unterscheidet.",
+        "message": "IP Adresse oder Name deines Cisco Telefons. Der Web-Server Port kann hinzugefügt werden falls dieser sich vom Standard unterscheidet.",
         "description": "Beschreibung für die Telefon-Adress Option"
     },
     "options_label_auth_config": {
